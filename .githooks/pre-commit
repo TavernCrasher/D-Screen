@@ -1,0 +1,4 @@
+#!/bin/sh
+# Refuses a commit that would add game data or anything else off the allowlist (tools/check_tree.py).
+# On once per clone: git config core.hooksPath .githooks
+exec python tools/check_tree.py --staged

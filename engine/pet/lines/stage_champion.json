@@ -1,0 +1,158 @@
+{
+	"_note": "The pet's lines for every Digimon of a stage (PetBrain.stage_key: baby = Fresh and In-Training); his own few (own.json) join them. Rows split at line breaks; at most 3 rows under the name, each must fit DW1's text box (tests: test_pet_lines, tools/check_pet_lines.gd). DW1's font has letters, digits and . , : ; ? ! ' + - = only; two spaces between sentences.",
+	"greet": [
+		"I'm here.  Let's get\nto work.",
+		"Ready to go!  Nothing\nwill stop us today.",
+		"Good to see you.\nI'll keep watch."
+	],
+	"morning": [
+		"Morning.  A good day\nfor training.",
+		"Up early?  Good.\nStrong habits!"
+	],
+	"night": [
+		"It's late.  Rest is\npart of training.",
+		"Still at it?  Then\nI'm with you.",
+		"File City's lights are\nout by now."
+	],
+	"talk": [
+		"File City grows with\nevery friend we find.",
+		"I've gotten strong.\nThanks to you.",
+		"Nobody gets past me.\nYour desk is safe.",
+		"I could use a good\nmeal.  Or two.",
+		"Jijimon would be proud\nof how far we've come.",
+		"The gym's fine, but this\nis good training too.",
+		"One more evolution...\nWho knows?",
+		"A strong body needs\na strong heart."
+	],
+	"praise": [
+		"Heh.  I'll do even\nbetter.",
+		"Thanks.  That means\na lot.",
+		"Of course!  Leave it\nto me!"
+	],
+	"scold": [
+		"...Fine.  I hear you.",
+		"Sorry.  It won't\nhappen again.",
+		"Hmph.  You're right."
+	],
+	"scold_unfair": [
+		"What was that for?",
+		"I did nothing wrong.\nYou know that.",
+		"Hmph.  Unfair, and you\nknow it.",
+		"Bad day?  Don't take it\nout on me."
+	],
+	"read": [
+		"Hmm.  Lots of text.\nI'll stand guard.",
+		"Is this some kind of\nbattle plan?",
+		"Reading trains the\nmind too."
+	],
+	"held": [
+		"Hey!  Put me down!",
+		"I'm too heavy for\nthis!",
+		"Whoa!  Not so high!"
+	],
+	"dropped": [
+		"Ugh.  I've taken worse\nhits than that.",
+		"Heh.  Didn't even\nhurt."
+	],
+	"wake": [
+		"Hm?  I was resting\nmy eyes.",
+		"You're back.  Good."
+	],
+	"done": [
+		"It's done!  Good work.",
+		"Finished!  A real\nvictory.",
+		"That one's beaten.\nWhat's next?"
+	],
+	"ask": [
+		"Hey!  You've got a\nquestion waiting.",
+		"They need your call.\nDon't keep them waiting.",
+		"A question for you!"
+	],
+	"your_turn": [
+		"Your move.",
+		"It's waiting on you."
+	],
+	"failed": [
+		"A setback.  We'll get\nit next time.",
+		"That failed.  Shake it\noff and try again.",
+		"Hmm.  Not this time."
+	],
+	"bye": [
+		"Later.  Keep it up.",
+		"I'll be back."
+	],
+	"game": [
+		"To File City!  The\nreal fight awaits.",
+		"See you in there!"
+	],
+	"hungry": [
+		"I could use a meal.",
+		"Getting hungry here.",
+		"Feed me and I'll\ntrain twice as hard."
+	],
+	"ate": [
+		"That's the stuff.",
+		"Good meal.  Thanks.",
+		"Now I'm fired up!"
+	],
+	"full": [
+		"I've had enough.",
+		"Not hungry right now."
+	],
+	"toilet": [
+		"I need the toilet.\nNow.",
+		"Hey!  Toilet, please!"
+	],
+	"toilet_done": [
+		"Much better.",
+		"That's a relief."
+	],
+	"toilet_no": [
+		"I don't need it.",
+		"Not now."
+	],
+	"accident": [
+		"...Don't look.",
+		"Couldn't hold it.\nSorry."
+	],
+	"pile_left": [
+		"You left that mess\nout there.",
+		"That pile stinks."
+	],
+	"missed": [
+		"I'm starving here.",
+		"No food again..."
+	],
+	"clean": [
+		"Thanks.  Much better.",
+		"Clean again."
+	],
+	"trained": [
+		"Stronger every day.",
+		"Good session."
+	],
+	"trained_enough": [
+		"That's my limit\non this one today.",
+		"Enough of this.\nSomething else."
+	],
+	"trained_frozen": [
+		"Good practice.",
+		"Keeps me sharp."
+	],
+	"train_start": [
+		"Let's go!",
+		"Watch this!"
+	],
+	"cant_reach": [
+		"Out of reach.",
+		"Can't get there."
+	],
+	"evolve_ready": [
+		"Power is welling up\ninside me...!",
+		"I'm ready for the\nnext stage!"
+	],
+	"evolve_close": [
+		"My %s isn't there\nyet.  Almost...",
+		"Train my %s.\nI'm nearly there."
+	]
+}

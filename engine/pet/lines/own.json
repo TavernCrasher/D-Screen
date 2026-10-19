@@ -1,0 +1,1127 @@
+{
+	"_note": "Each Digimon's own pet lines, by DW1 id (his stage's pool in stage_*.json joins them; \"_only\" replaces the pool, \"_moves\" fixes the DW1 animation ids he trains with). Rows split at line breaks; at most 3 rows under the name, each must fit DW1's text box (tests: test_pet_lines, tools/check_pet_lines.gd). DW1's font has letters, digits and . , : ; ? ! ' + - = only; two spaces between sentences.",
+	"1": {
+		"greet": [
+			"Hi hi!  Botamon here!"
+		],
+		"talk": [
+			"Bubble!  Bubble!\n...Pop.",
+			"Me small.  Me round.\nMe happy!",
+			"Jiji say: watch your\nDigimon.  Me watch you!"
+		],
+		"scold_unfair": [
+			"Bubble?  Me no did it!\nBubble..."
+		],
+		"held": [
+			"Wheee!  Up high!"
+		]
+	},
+	"2": {
+		"greet": [
+			"Hey!  New info!\nKoromon is here!"
+		],
+		"talk": [
+			"Train with balance!\nJiji says so.  Me too!",
+			"Bonus Try!  Same pictures,\nbig power!  Hehe.",
+			"Work hard, rest too.\nThat's good info."
+		],
+		"scold_unfair": [
+			"Huh?  What did me do?\nJiji never yells."
+		],
+		"done": [
+			"Done!  New info:\nyou did great!"
+		]
+	},
+	"3": {
+		"greet": [
+			"Okay then!  Agumon here.\nGlad to meet you!"
+		],
+		"talk": [
+			"My new business is\nItem Keeper.  I keep stuff!",
+			"Your desk is way nicer\nthan that old place.",
+			"Pepper Breath!  ...Oops.\nIs the desk okay?"
+		],
+		"scold": [
+			"Rats!  Okay, okay.\nI'll do better."
+		],
+		"scold_unfair": [
+			"Hey!  What was that\nfor?  I kept your stuff!"
+		]
+	},
+	"4": {
+		"greet": [
+			"Gruun.  Oh, hello!\nYou carry city smells."
+		],
+		"talk": [
+			"Ah, nice and cool here.\nComfy is the best feeling.",
+			"Selling isn't my thing.\nStill, I'll give it a go!",
+			"Static Elect!  Bzzt.\nSorry, did that tickle?"
+		],
+		"scold_unfair": [
+			"Bzzt?  But I didn't\ndo anything wrong..."
+		],
+		"held": [
+			"Gruun!?  Gruun.ru.ru..\nPut me down, OK?"
+		]
+	},
+	"5": {
+		"greet": [
+			"Found you at last!\nTime to settle the score!"
+		],
+		"talk": [
+			"I tracked you down by\nchasing the rumors.",
+			"You're good.  But you're\nstill amateurs!",
+			"An Arena in the city?\nThat was my idea."
+		],
+		"praise": [
+			"Hah!  Stay by me.\nYou'll grow far stronger!"
+		],
+		"scold_unfair": [
+			"Scolding me for nothing?\nStill an amateur, huh."
+		]
+	},
+	"6": {
+		"greet": [
+			"Ha ha ha!  Figured\nyou'd turn up."
+		],
+		"talk": [
+			"Dark angel, that's me.\nDarkness is my power.",
+			"A really fantastic Item?\nMaybe I'll tell you.",
+			"I was brainwashed once.\nNever again.  We don't\nneed a ruler."
+		],
+		"scold_unfair": [
+			"Order me around with no\nreason?  I'm done with\nrulers."
+		],
+		"night": [
+			"Night suits me.  The\ndarkness is my power."
+		]
+	},
+	"7": {
+		"greet": [
+			"I'm healed now.\nGive me some work!"
+		],
+		"talk": [
+			"I slept a long time at\nJiji's.  I feel great now.",
+			"Hurricane!  ...Sorry\nabout your papers.",
+			"From the sky, your desk\nlooks really tiny."
+		],
+		"scold_unfair": [
+			"What?  I was just\nresting...  Unfair."
+		],
+		"bye": [
+			"Our paths will cross\nagain.  I just know."
+		]
+	},
+	"8": {
+		"greet": [
+			"Who are you?  Oh, it's\nyou.  Sorry, I get excited."
+		],
+		"talk": [
+			"I'll guard this desk.\nI won't let anyone\nmess it up!",
+			"In the Glacial Time Zone,\ntime goes slow.  Like now.",
+			"My cooking is the best!\nI told Jiji so myself."
+		],
+		"scold_unfair": [
+			"What for?!  I guarded\nthis desk all day!"
+		],
+		"held": [
+			"Master!?  ...Oh, it's\njust you.  Down, please."
+		]
+	},
+	"9": {
+		"greet": [
+			"Hey!  The chief of flames\nhas arrived!"
+		],
+		"talk": [
+			"Eat all the fiery food\nyou can handle!",
+			"Out of my way!\n...Sorry.  Old habit.",
+			"Fireball!  Don't worry,\nyour PC is fireproof.\n...Right?"
+		],
+		"scold_unfair": [
+			"Grr...  Why me?!  ...Cool\ndown, Meramon.  Cool down."
+		],
+		"held": [
+			"Hot!  Careful, I'm all\nflames, you know!"
+		]
+	},
+	"10": {
+		"greet": [
+			"Back again?  Got a\nrequest for me?"
+		],
+		"talk": [
+			"Play the flute and I'll\ncome.  Even out here.",
+			"You must be the fisher\nI keep hearing about!",
+			"Friends, then.  So\nbe it."
+		],
+		"scold_unfair": [
+			"We're friends, aren't\nwe?  Then why?"
+		],
+		"bye": [
+			"Bye for now, my friend."
+		]
+	},
+	"11": {
+		"greet": [
+			"Yo!  Hola, friends!"
+		],
+		"talk": [
+			"I love dark places.\nCould you dim the screen?",
+			"Did you say I'm dumb?\nSo rude!  ...You didn't?",
+			"This stall is mine.\nPlease, buy a thing."
+		],
+		"scold": [
+			"How rude!  Fine.  I'll\ngo sulk in the dark."
+		],
+		"scold_unfair": [
+			"I didn't do anything!\nPick on someone else."
+		]
+	},
+	"12": {
+		"greet": [
+			"Huh?  Where am I?\n...Oh, your desk.  Good."
+		],
+		"talk": [
+			"Let me think of a\nnickname for you...",
+			"How about The Mighty?\nOr Mastermind?  Hmm.",
+			"I will not move for\nanyone.  Except you."
+		],
+		"praise": [
+			"Ha!  Call me Cool Dude\nfrom now on."
+		],
+		"scold_unfair": [
+			"Hey, I'm Cool Dude.\nCool Dudes don't get\nyelled at for nothing."
+		]
+	},
+	"13": {
+		"greet": [
+			"You're nice.  I'm Mamemon.\nI'll stay with you!"
+		],
+		"talk": [
+			"Going to fight me?\nScared?!  Hehe.",
+			"Smiley Bomb!  It's small,\nbut it packs a punch.",
+			"I sell treasured Items.\nTreasured?  It's a secret!"
+		],
+		"scold_unfair": [
+			"Whaaat?  For nothing?\nYou wanna battle, huh?"
+		],
+		"dropped": [
+			"Oh no!  I lost!\n...To the floor."
+		]
+	},
+	"14": {
+		"greet": [
+			"Hello!  Toy Town's hero\nis here to help."
+		],
+		"talk": [
+			"Lovely Attack!\nFeel the love!",
+			"Am I a Digimon or a\nstuffed animal?  Yes.",
+			"Toy Town's old tale:\nthe island belongs to\nall of us."
+		],
+		"scold_unfair": [
+			"No love for me?  I\ndidn't do a thing..."
+		],
+		"held": [
+			"Hug me if you like.\nI'm very soft."
+		]
+	},
+	"15": {
+		"greet": [
+			"Puni!  Hi hi!"
+		],
+		"talk": [
+			"Bubble!  Pop pop!",
+			"Too much stuff?  Look\nagain.  Puni found it!",
+			"Puni likes shops.\nShiny Items!"
+		],
+		"scold_unfair": [
+			"Puni good!  Puni didn't\ndo it!"
+		],
+		"held": [
+			"Puni flying!  Wheee!"
+		]
+	},
+	"16": {
+		"greet": [
+			"Tsunomon here!\nI have news to share."
+		],
+		"talk": [
+			"The bridge is mended!\nIt was hard work.",
+			"Word is, something rare\nlurks near Coela Point!",
+			"I'm small.\nBut I work hard!"
+		],
+		"scold_unfair": [
+			"But I worked so hard!\nWhy?"
+		],
+		"done": [
+			"Done?  That was\nhard work!  Good job."
+		]
+	},
+	"17": {
+		"greet": [
+			"Uh...  hi.  Let's not\nfight, okay?"
+		],
+		"talk": [
+			"Finding stuff is my\ntalent.  Lost anything?",
+			"I worry a lot.  Is your\nwork going okay?",
+			"Blue Blaster!  ...Sorry.\nThat was an accident."
+		],
+		"scold": [
+			"I knew it.  I was\nworried about this..."
+		],
+		"scold_unfair": [
+			"Did I do something?\nNow I'm worried..."
+		]
+	},
+	"18": {
+		"greet": [
+			"Hee hee!  Poke me and\nzap, you're shocked!"
+		],
+		"talk": [
+			"I switched the lamp on.\nIs your screen bright\nenough?",
+			"Let's make this desk\nclean and cheerful!",
+			"Does light make a\ndifference?  It depends\non how you think."
+		],
+		"scold_unfair": [
+			"Was that fair?  It\ndepends on how you\nthink.  I think no."
+		],
+		"held": [
+			"Careful!  I told you,\nyou'll get shocked!"
+		]
+	},
+	"19": {
+		"greet": [
+			"Hey!  Let's train.\nWhat's your spot?"
+		],
+		"talk": [
+			"When the date has twin\n2s, the Insectoid\nWarrior Contest starts!",
+			"Training bores me.\nGive me a real fight!",
+			"I tweaked the machines.\nImproved!  Go train!"
+		],
+		"praise": [
+			"So strong!  I've got\nnothing left to teach."
+		],
+		"scold_unfair": [
+			"Scolding without a cause\nis bad training."
+		]
+	},
+	"20": {
+		"greet": [
+			"Angemon, your guardian\nangel, at your service."
+		],
+		"talk": [
+			"Thy duty is mine own\ntask.  Labor on.",
+			"Heaven's secrets are\nmine.  So peaceful.",
+			"I record conversations.\nYours are safe with me."
+		],
+		"scold_unfair": [
+			"Thou scoldest me for\nnaught?  Heaven sees."
+		],
+		"done": [
+			"Thy task is done.  I\nhave fulfilled my duty."
+		]
+	},
+	"21": {
+		"greet": [
+			"Oh, you are here.\nNeed a delivery?"
+		],
+		"talk": [
+			"Courier here.  Anything\ngets delivered.",
+			"Any place, any hour,\nI'll fly you there.\nFor a fee.",
+			"You can only carry\nyourself, am I right?"
+		],
+		"scold_unfair": [
+			"A scolding I didn't\norder?  Return to sender."
+		],
+		"held": [
+			"Hold on tight!  ...Wait,\nyou're carrying me?"
+		]
+	},
+	"22": {
+		"greet": [
+			"Glad you returned.\nA fair fight today."
+		],
+		"talk": [
+			"I never lose when it's\na fair fight.",
+			"I can cook, you know.\nJiji was surprised too.",
+			"Tomorrow at four o'clock.\nOne on one.  Deal?"
+		],
+		"scold_unfair": [
+			"That wasn't fair.\nI never lose a fair one."
+		],
+		"dropped": [
+			"I let my guard down.\nThat wasn't fair!"
+		]
+	},
+	"23": {
+		"greet": [
+			"Calm down.  It's Frigimon,\nthe Ice Snow Digimon."
+		],
+		"talk": [
+			"Snow cones, ice cream!\nThis will be awesome.",
+			"Don't be so reckless.\nRest when you're tired.",
+			"Taste my icy treat!\nIt's what I do best."
+		],
+		"scold_unfair": [
+			"Hey, don't be so\nreckless.  I did nothing."
+		],
+		"held": [
+			"Brr!  Your hand is so\nwarm.  I might melt!"
+		]
+	},
+	"24": {
+		"greet": [
+			"Is somebody there?\n...Ah, it's you."
+		],
+		"talk": [
+			"No eyes here, yet I\nsense nearly everything.",
+			"A mighty force here.\nIt comes from you.",
+			"Home is the ocean.\nThis desk is so dry."
+		],
+		"scold_unfair": [
+			"I can't see, but I feel\nit.  That was unfair."
+		],
+		"game": [
+			"Get on my back.  I'll\ntake you there by sea!"
+		]
+	},
+	"25": {
+		"greet": [
+			"He he he.  Hey,\nI'm Vegiemon!"
+		],
+		"talk": [
+			"Hey, are you a veggie\nfan?",
+			"Veggie lovers are always\ngood people.",
+			"Rare veggies grow here\nnow.  Take plenty!"
+		],
+		"praise": [
+			"He he he!  You must\nlike veggies!"
+		],
+		"scold_unfair": [
+			"What did I do?  Do you\nhate veggies or what?"
+		]
+	},
+	"26": {
+		"greet": [
+			"Are you...  you?\nSpeak, or else..."
+		],
+		"talk": [
+			"I'll compete in the\nArena.  Myotismon says\nI'm his pupil.",
+			"I listen to others now.\nTell me what to do.",
+			"Dark Shot!  ...Don't\nworry.  Not at you."
+		],
+		"scold_unfair": [
+			"I listen to others now.\nBut...  what did I do?"
+		],
+		"held": [
+			"I'll attack you!\n...Just kidding.  Down?"
+		]
+	},
+	"27": {
+		"greet": [
+			"MetalMamemon!  Ninety\nnine wins, zero losses!"
+		],
+		"talk": [
+			"A worthy rival, you.\nOne day I'll win!",
+			"Any jobs that compete\nwith you?  I'll take it.",
+			"You will be number one\nhundred.  Someday."
+		],
+		"scold_unfair": [
+			"A rival scolds for no\nreason?  I'll remember."
+		],
+		"done": [
+			"Finished already?  Better\nthan I guessed."
+		]
+	},
+	"29": {
+		"greet": [
+			"Poyo!  Hi!"
+		],
+		"talk": [
+			"Six hours to grow!\nPoyo knows!",
+			"Poyo forgot.\nBut Poyo happy!",
+			"Float, float...\nPoyo floats here."
+		],
+		"scold_unfair": [
+			"Poyo?  Poyo did nothing!"
+		],
+		"held": [
+			"Poyo up!  Poyo up!"
+		]
+	},
+	"30": {
+		"greet": [
+			"Tokomon here!\nThis is real!"
+		],
+		"talk": [
+			"Month?  Seasons?\nIs that edible?",
+			"A day has twenty four\nhours.  I know that!",
+			"Money is never enough.\nMore bits!"
+		],
+		"scold_unfair": [
+			"Scold?  Is that edible?\n...Why me?"
+		],
+		"morning": [
+			"Morning!  Most Digimon\nget up in the morning."
+		]
+	},
+	"31": {
+		"greet": [
+			"Step into my store!\n...Oh, it's your desk."
+		],
+		"talk": [
+			"Again, again!\nA tiny bit further!",
+			"Plenty of spare time.\nHow shall I spend it?",
+			"Boom Bubble!  Pop!"
+		],
+		"scold": [
+			"That's not fun!"
+		],
+		"scold_unfair": [
+			"Huh?  Why?  I was\nbeing good!"
+		]
+	},
+	"32": {
+		"greet": [
+			"Kunemon, bug type.\nHi there!"
+		],
+		"talk": [
+			"I'm hungry.\nAny plants on this desk?",
+			"Native Forest's Blue\nApple is so yummy.",
+			"Electric Thread!  Bzzt.\nI'm still hungry, though."
+		],
+		"scold_unfair": [
+			"Huh?  I didn't eat\nanything.  Promise."
+		],
+		"bye": [
+			"Bring some food\nnext time, okay?"
+		]
+	},
+	"33": {
+		"greet": [
+			"My wing's much better.\nThanks to you."
+		],
+		"talk": [
+			"People say the city is\nhuge.  Bigger than I guessed.",
+			"I want to be useful in\nbusiness.  Got any jobs?",
+			"Long flights are tough.\nThis desk works for me."
+		],
+		"praise": [
+			"Thank you.  Perhaps I'll\nrepay you one day."
+		],
+		"scold_unfair": [
+			"Was I in the way?  I\nwas only trying to help."
+		]
+	},
+	"34": {
+		"greet": [
+			"Ha ha ha!  Leave your\nstuff here!  ...Kidding."
+		],
+		"talk": [
+			"On patrol for suspicious\ntypes.  None around.",
+			"Yes?  I'm not in your\nway, am I?!",
+			"Wanna buy my arm?\n...Jiji said no too."
+		],
+		"scold": [
+			"Drat!  You'll pay for\nthis one day!"
+		],
+		"scold_unfair": [
+			"What'd I do?!  I didn't\ndo nothin' this time!"
+		]
+	},
+	"35": {
+		"greet": [
+			"Hey!  Got any news\nfor my newspaper?"
+		],
+		"talk": [
+			"Digimon call me the\nbiggest know-it-all!",
+			"We need information, so\nI made a newspaper!",
+			"Shell Newspaper extra:\nyou're working hard!"
+		],
+		"scold_unfair": [
+			"Shell Newspaper extra:\ntamer scolds innocent\nDigimon!"
+		],
+		"read": [
+			"Reading, huh?  I'm your\nsource for new info."
+		]
+	},
+	"36": {
+		"greet": [
+			"Hello.  Guess what!\nMy clinic is open."
+		],
+		"talk": [
+			"That test wasn't a game.\nI hoped to team up.",
+			"Keep Happiness up and\nTiredness down.  That's\na long life.",
+			"Tired?  Rest, then eat\nand sleep regularly."
+		],
+		"scold_unfair": [
+			"A scold with no cause\nteaches nothing.  Think\nbefore you scold."
+		],
+		"done": [
+			"All is well.  Stay\nsharp, though."
+		]
+	},
+	"37": {
+		"greet": [
+			"Bakke!  Bakkeee bakke!"
+		],
+		"talk": [
+			"Bakke-bakke?",
+			"Bakke...  bakkeee?",
+			"Bakke!  Bakke bakke?\n...Bakke."
+		],
+		"scold_unfair": [
+			"Bakke?!  Bakke bakke!\n...Bakke."
+		],
+		"night": [
+			"Bakkeee bakke!  Bakke\nbakke bakkeee!"
+		]
+	},
+	"38": {
+		"greet": [
+			"You came!\nI'll find the treasure."
+		],
+		"talk": [
+			"Digging today.\nMore digging tomorrow.",
+			"It's so much fun.\nDigging, I mean.",
+			"Your PC has lots of\nstuff underground.  Hmm."
+		],
+		"scold_unfair": [
+			"I was just digging!\nWhat's wrong with that?"
+		],
+		"done": [
+			"Guess what?  Treasure\nis ours!"
+		]
+	},
+	"39": {
+		"greet": [
+			"Oh?  You've heard of me?\nSukamon, that's me!"
+		],
+		"talk": [
+			"We're made from Digital\nWaste.  Your trash bin\nlooks cozy.",
+			"King of Sukamon is the\ncard I crave.  Have it?",
+			"Never make the King mad.\nYou'll be digivolved!"
+		],
+		"scold_unfair": [
+			"Hey, I didn't do it!\nI'll tell the King!"
+		],
+		"held": [
+			"Whoa, how neat!  Never\nseen such a thing!"
+		]
+	},
+	"40": {
+		"greet": [
+			"Planner function is up\nand running.  All good."
+		],
+		"talk": [
+			"Do humans last a whole\ncentury?  Try it!",
+			"Our computer is flawless.\nYours is...  fine too.",
+			"Repairs finished.  Time\nto study the data."
+		],
+		"scold_unfair": [
+			"Error.  No fault found.\nPlease check your data."
+		],
+		"read": [
+			"Reading data.  I'll try\nto connect it for you."
+		]
+	},
+	"41": {
+		"greet": [
+			"Hey!  I've got a funky\nfeeling inside!"
+		],
+		"talk": [
+			"Time to dance!  Go on,\nloosen up!",
+			"I won't crash your\ncomputer.  It's a good one.",
+			"Got music on this thing?\nIt makes my heart pump!"
+		],
+		"scold_unfair": [
+			"Whoa, harsh!  I was just\ngrooving, man."
+		],
+		"bye": [
+			"Waaait, pardoooon me.\nCatch you later!"
+		]
+	},
+	"42": {
+		"greet": [
+			"Hey you!  News says\nyou're on a roll lately."
+		],
+		"talk": [
+			"A Golden Banana, just\n50,000 bits.\nNo loans, please.",
+			"People ought to pay in\nreal cash.",
+			"Watch my power!\nConcert Crush!"
+		],
+		"scold": [
+			"Fool!  Ugh... Now I\nhave to act."
+		],
+		"scold_unfair": [
+			"Excuse me?!  The King\nof Monkeys did nothing!"
+		]
+	},
+	"43": {
+		"greet": [
+			"Yura!  Hi hi!"
+		],
+		"talk": [
+			"Rumor!  Rumor!\nYura hears rumors.",
+			"Get up early.  Walk in\nmist.  Good thing!",
+			"Yura check rumors.\nCome back later!"
+		],
+		"scold_unfair": [
+			"Yura did nothing!\nThat rumor is wrong!"
+		],
+		"morning": [
+			"Early!  Mist!\nSomething good happens!"
+		]
+	},
+	"44": {
+		"greet": [
+			"Hi!  Fancy a\nbite of Meat?"
+		],
+		"talk": [
+			"Meat for all, grown\nright here.  On a farm!",
+			"No food?  Look for\nmushrooms in the forest.",
+			"Three Meat a day.\nJiji and me decided."
+		],
+		"scold_unfair": [
+			"Me didn't do it!\nMe only grow Meat."
+		],
+		"done": [
+			"Done?  Here's today's\nMeat!  ...Pretend Meat."
+		]
+	},
+	"45": {
+		"greet": [
+			"I'm here again!"
+		],
+		"talk": [
+			"The notorious Digimon\nsnatcher?  ...Not you?",
+			"What job would you\nrecommend for me?",
+			"Spiral Twister!  Your\npapers are fine.  Mostly."
+		],
+		"scold_unfair": [
+			"Huh?  What did I do?\nI'm not a kidnapper!"
+		],
+		"held": [
+			"Ahhh!  Help me out!\n...Oh, it's you."
+		]
+	},
+	"46": {
+		"greet": [
+			"Hello!  Palmon here.\nI can be a big help!"
+		],
+		"talk": [
+			"I hate fighting.\nWorking here is nicer.",
+			"Gonna enlarge the Meat\nfield.  Meat galore!",
+			"A desk?  Sounds like fun!"
+		],
+		"praise": [
+			"See?  I told you I'd\nbe useful!"
+		],
+		"scold_unfair": [
+			"But I was being useful!\nThat's not nice..."
+		]
+	},
+	"47": {
+		"greet": [
+			"Welcome.  My words\nmake sense to you?  Good."
+		],
+		"talk": [
+			"Sell lots and I'll pay\nyou lots.",
+			"Strength isn't all.\nCourage and wits count.",
+			"I was testing you.\nYou passed, of course."
+		],
+		"scold_unfair": [
+			"Scolding me for nothing?\nIs this a test?  You fail."
+		],
+		"done": [
+			"Time to wrap up, I\nthink.  Thanks for all this."
+		]
+	},
+	"48": {
+		"greet": [
+			"Your name reached me.\nRely on me!"
+		],
+		"talk": [
+			"Sometimes I go back to\nGear Savanna to patrol.",
+			"My ancestors said: when\ndanger comes, go to\nthe city.",
+			"I'm thinking about the\nisland's future.  You too?"
+		],
+		"scold_unfair": [
+			"A scold without reason\nhelps no one.  Be fair."
+		],
+		"bye": [
+			"In a jam?  Just shout.\nI'll show up fast!"
+		]
+	},
+	"49": {
+		"greet": [
+			"Aa-ha, back again.\nCoelamon, the fish\nDigimon, at your service."
+		],
+		"talk": [
+			"I can guess your wish.\nYou want it done?",
+			"The world needs more\nteamwork.  Join me.",
+			"Plenty of rest keeps a\nDigimon healthy."
+		],
+		"praise": [
+			"Ha-ha, is that so!"
+		],
+		"scold_unfair": [
+			"Is that so?  I don't\nremember doing anything."
+		]
+	},
+	"50": {
+		"greet": [
+			"Hey you!  Well, well,\nyou're full of surprises!"
+		],
+		"talk": [
+			"Look at my sculpture!\nWhat a masterpiece.",
+			"Huh?  Are you teasing\nme?  Not funny!",
+			"Where was I?  Eh,\nnever mind."
+		],
+		"scold_unfair": [
+			"What do you mean?!\nYou're picking on me!"
+		],
+		"morning": [
+			"Early birds catch bugs.\nKidding, kidding!"
+		]
+	},
+	"51": {
+		"greet": [
+			"Hey!  Have you seen\nKabuterimon anywhere?"
+		],
+		"talk": [
+			"Kabuterimon is my goal.\nHow do I win?",
+			"Training is great, but\nnap time matters too.",
+			"Bug fight contest!\nEnter by ten on the 22nd."
+		],
+		"scold_unfair": [
+			"What?  Why me?  Go\nscold Kabuterimon!"
+		],
+		"night": [
+			"A one hour break?\nOr maybe eight?"
+		]
+	},
+	"52": {
+		"greet": [
+			"Hello, I'm Mojyamon!\nThanks for coming!"
+		],
+		"talk": [
+			"Partners, then,\nright?",
+			"Odd goods in my store.\nCome and browse!",
+			"Want to trade?  I'll give\nyou something good."
+		],
+		"praise": [
+			"Yay!  So happy!  You\nhelped us a whole lot."
+		],
+		"scold_unfair": [
+			"Hey, I did nothing.\nWant to trade for an\napology?"
+		]
+	},
+	"53": {
+		"greet": [
+			"Who are you?!"
+		],
+		"talk": [
+			"Me?  You?  Who?!",
+			"Who are you?  ...Oh.\nStill you.",
+			"I came, and then I left.\n...Then I came back."
+		],
+		"scold_unfair": [
+			"Who did what?!\nNot me.  ...Was it?"
+		],
+		"bye": [
+			"Off I go!  Me?  You?\nWho?!  Bye!"
+		]
+	},
+	"54": {
+		"greet": [
+			"... Nobody is stronger\nthan me."
+		],
+		"talk": [
+			"I'm no loser to you.\nCome to the Arena.",
+			"...",
+			"Genoside Attack.\n...Not today."
+		],
+		"scold": [
+			"Loser?  Not me.  Not\neven at this moment."
+		],
+		"scold_unfair": [
+			"Scolded for nothing?\nI won't forget this."
+		]
+	},
+	"55": {
+		"greet": [
+			"Heh, lucky you, meeting\nme."
+		],
+		"talk": [
+			"Always so busy at this\ndesk...  Yeah, right!",
+			"Looks fool you.  I'm an\nUltimate Digimon.",
+			"Mister, want a secret\nitem?  No discount."
+		],
+		"scold_unfair": [
+			"Hey!  I'm an Ultimate.\nI don't get scolded\nfor nothing."
+		],
+		"wake": [
+			"Huh?  I wasn't lazy.\nI was saving energy."
+		]
+	},
+	"56": {
+		"greet": [
+			"......"
+		],
+		"talk": [
+			"......?",
+			"......  Wonder Egg\nOmelet?  ......",
+			"Speed of light.\nGone.  ...Back."
+		],
+		"scold_unfair": [
+			"......!?  ......  Why?"
+		],
+		"done": [
+			"......!\nWonder Egg Bowl for you."
+		]
+	},
+	"57": {
+		"greet": [
+			"Hey bro!  Got a fish?"
+		],
+		"talk": [
+			"What I call...\nDigimon Curling!",
+			"A fish per match.\nWin and take a fine prize.",
+			"Wanna beat me?  Think\nhard first!"
+		],
+		"praise": [
+			"Wow, dude.  Are you\nsome Curling prodigy?!"
+		],
+		"scold_unfair": [
+			"Whoa, dude.  What did\nI do?  Not cool."
+		]
+	},
+	"58": {
+		"_only": true,
+		"_moves": [
+			48,
+			49,
+			56
+		],
+		"greet": [
+			"Ninjamon, reporting in!\nI'll train right here.",
+			"Ninja Village is far away.\nThis desk will do fine.",
+			"Good, you're here.\nLet's both work hard today."
+		],
+		"morning": [
+			"Good morning!  A ninja\nrises before the sun.",
+			"Morning training starts\nnow.  You too, Master!"
+		],
+		"night": [
+			"It's late.  Even ninjas\nneed sleep, you know.",
+			"Training this late?\nI won't lose to you!",
+			"In Ninja Village, we'd\nbe asleep by now..."
+		],
+		"talk": [
+			"In Ninja Village, we train\nfrom dawn to dusk.",
+			"A ninja's best weapon\nis patience.  And shuriken.",
+			"Take me as your\npupil!  ...Still no?",
+			"Master!  ...Oh, right.\nYou don't do disciples.",
+			"Iga School Knife Throw!\n...Just practicing.",
+			"Someday I'll beat you.\nThat's a promise.",
+			"Hard work is the only\nshortcut.  I believe that.",
+			"You think I'm small?\nNinjas are hard to see!",
+			"My scarf flaps when I\nrun.  Pretty cool, huh?",
+			"Sitting still is training\ntoo.  Probably.",
+			"I came all this way to\nfind strong people.",
+			"Even Ninja Village knows\nyour name.",
+			"I challenge you to a\nduel!  ...After work.",
+			"A true ninja never\ncomplains.  ...Mostly."
+		],
+		"praise": [
+			"Really!?  I'll work\neven harder!",
+			"Hehe.  Ninja Village would\nbe proud of me.",
+			"Thanks!  That counts\nas training too.",
+			"I-it was nothing!\nA ninja stays humble."
+		],
+		"scold": [
+			"Sorry!  I'll do better.",
+			"Ugh...  A ninja must\naccept criticism.",
+			"That was a test, right?\nI won't fail again.",
+			"I deserved that.\nBack to training!"
+		],
+		"scold_unfair": [
+			"Huh?  What did I do?\nIs this a ninja test?",
+			"I didn't do anything...\nA ninja endures.  Hmph.",
+			"Master, that was unfair.\n...Not that I'm your\ndisciple.",
+			"Hmph.  Then I'll train\nalone."
+		],
+		"train_48": [
+			"Hah!  Sonic Jab!"
+		],
+		"train_49": [
+			"Dynamite Kick!  Hyah!"
+		],
+		"train_56": [
+			"Iga School Knife Throw!"
+		],
+		"read": [
+			"So many words...\nIs this a secret scroll?",
+			"Hmm.  I can't read this,\nbut I'll keep watch.",
+			"Reading is training\nfor the mind too!"
+		],
+		"held": [
+			"Wh-whoa!  Put me down!",
+			"Hey!  A ninja walks\non his own feet!",
+			"This isn't training!"
+		],
+		"dropped": [
+			"...I meant to land\nlike that.",
+			"Ouch.  Good thing\nninjas are tough."
+		],
+		"wake": [
+			"Huh!?  I wasn't asleep!\nI was meditating!",
+			"Oh, you're back!\nTraining resumes!"
+		],
+		"done": [
+			"Job finished!  That counts\nas training too.",
+			"Done!  The rumors about\nyour strength are true.",
+			"Done!  Shall we take on\nthe next one?",
+			"The work is finished.\nI watched the whole time!"
+		],
+		"ask": [
+			"Master!  Something needs\nyour answer!",
+			"Hey!  They're waiting\nfor you to decide.",
+			"A question for you!\nDon't keep them waiting."
+		],
+		"your_turn": [
+			"It's your turn.\nWhat's the next move?"
+		],
+		"failed": [
+			"Something went wrong...\nWe'll try again!",
+			"A setback!  A ninja\nnever gives up.",
+			"That didn't work.\nBack to training!"
+		],
+		"bye": [
+			"I'll be back.  Keep\ntraining while I'm gone!",
+			"Ninjamon, signing off!"
+		],
+		"game": [
+			"Real training time!\nSee you in there!",
+			"Off to File City.\nLet's go!"
+		],
+		"hungry": [
+			"A ninja can go days\nwithout food.  ...I can't.",
+			"My stomach betrays\nmy position!",
+			"Rations, please!"
+		],
+		"ate": [
+			"Fuel for the shadow\narts!",
+			"Delicious!  Thank you,\nmaster!",
+			"Now I can train\nall night!"
+		],
+		"full": [
+			"A ninja never overeats.",
+			"I'm full.  Discipline!"
+		],
+		"toilet": [
+			"Even ninjas need\nthe toilet!",
+			"Toilet!  Quickly!"
+		],
+		"toilet_done": [
+			"Mission complete.",
+			"Nobody saw that."
+		],
+		"toilet_no": [
+			"I don't need to go.",
+			"Not now, master."
+		],
+		"accident": [
+			"...A ninja leaves\nno trace.  Usually.",
+			"Forgive me, master!"
+		],
+		"pile_left": [
+			"That pile gives away\nour position!",
+			"Please clean that up!"
+		],
+		"missed": [
+			"Master...  my rations?",
+			"A hungry ninja is\na weak ninja..."
+		],
+		"clean": [
+			"No trace left.\nThank you!",
+			"Clean as a hidden\nblade!"
+		],
+		"trained": [
+			"My training pays off!",
+			"Ninja Village would\nbe proud!"
+		],
+		"trained_enough": [
+			"A ninja trains many\nways.  Another!",
+			"Enough of this one."
+		],
+		"trained_frozen": [
+			"Good practice!",
+			"My form improves!"
+		],
+		"train_start": [
+			"Hyah!",
+			"Watch closely!"
+		],
+		"cant_reach": [
+			"Too far, even for\na ninja!",
+			"I can't reach it!"
+		],
+		"evolve_ready": [
+			"My ninja spirit is\nawakening...!",
+			"A new power stirs.\nThe next stage nears!"
+		],
+		"evolve_close": [
+			"A ninja must hone\nhis %s.  Almost!",
+			"More %s training!\nI'm close, master!"
+		]
+	},
+	"59": {
+		"greet": [
+			"I am Phoenixmon.\nMy wings are yours."
+		],
+		"talk": [
+			"Crimson Flare!  ...Only\na small one.  For warmth.",
+			"Few ever reach this\nform.  Now look at me!",
+			"From up high, File Island\nlooks small.  So does\nyour desk."
+		],
+		"scold_unfair": [
+			"You scold a Phoenixmon\nfor nothing?  Odd human."
+		],
+		"held": [
+			"Mind my feathers.\nThey're quite hot."
+		]
+	},
+	"60": {
+		"greet": [
+			"HerculesKabuterimon,\nsuper strong.  Hello!"
+		],
+		"talk": [
+			"The Insectoid Warrior\nContest?  Nobody wants\nto face me.",
+			"High Electro Shocker!\n...Your PC is fine.\nI think.",
+			"I'm super strong.  Even\nmy horn says so."
+		],
+		"praise": [
+			"Naturally.  Winners get\npraise and Items."
+		],
+		"scold_unfair": [
+			"Me?  I've done nothing.\nWinners don't get yelled\nat."
+		]
+	},
+	"61": {
+		"greet": [
+			"MegaSeadramon has\nsurfaced.  Hello."
+		],
+		"talk": [
+			"Mail Strome!  ...That's\njust a ripple.  Relax.",
+			"No lake is big enough\nfor me anymore.",
+			"Is there a lake near\nyour desk?  No?  Pity."
+		],
+		"scold_unfair": [
+			"For nothing?  My lake\nwas calmer than this."
+		],
+		"held": [
+			"I'm very long.  Mind\nmy tail on the way up."
+		]
+	}
+}

@@ -1,0 +1,44 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="D-Screen"
+config/description="A desktop partner for Digimon World 1. An unofficial fan project; it reads your own copy of the game."
+run/main_scene="res://pet/pet.tscn"
+config/use_custom_user_dir=true
+config/custom_user_dir_name="D-Screen"
+config/features=PackedStringArray("4.7")
+config/icon="res://dscreen/icon_256.png"
+config/windows_native_icon="res://dscreen/icon.ico"
+boot_splash/show_image=false
+boot_splash/bg_color=Color(0, 0, 0, 0)
+
+[autoload]
+
+GameData="*res://scripts/game_data.gd"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/size/initial_position_type=0
+window/size/initial_position=Vector2i(-100, -100)
+window/size/window_width_override=1
+window/size/window_height_override=1
+window/size/borderless=true
+window/size/transparent=true
+window/per_pixel_transparency/allowed=true
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+viewport/transparent_background=true
+environment/defaults/default_clear_color=Color(0, 0, 0, 0)

@@ -1,0 +1,156 @@
+{
+	"_note": "The pet's lines for every Digimon of a stage (PetBrain.stage_key: baby = Fresh and In-Training); his own few (own.json) join them. Rows split at line breaks; at most 3 rows under the name, each must fit DW1's text box (tests: test_pet_lines, tools/check_pet_lines.gd). DW1's font has letters, digits and . , : ; ? ! ' + - = only; two spaces between sentences.",
+	"greet": [
+		"I'm here.  Let us\nbegin.",
+		"A new day.  I'll be at\nyour side.",
+		"Good.  You came.\nShall we work?"
+	],
+	"morning": [
+		"Morning.  The early\nhours are the calmest.",
+		"Good morning.  Steady\nas always."
+	],
+	"night": [
+		"Night has come.  Don't\npush yourself too far.",
+		"Late again?  I'll\nkeep watch.",
+		"Even the strongest\nneed sleep."
+	],
+	"talk": [
+		"We've come a long way\nfrom that first egg.",
+		"Strength isn't only\nin battle.",
+		"File City is lively\nthese days.",
+		"I sense your focus.\nGood.",
+		"Few ever reach this\nform.  Thank you.",
+		"Patience wins more\nfights than power.",
+		"Your desk is calm.\nI like it here.",
+		"Take a break when you\nneed one."
+	],
+	"praise": [
+		"Hm.  I am glad.",
+		"Your words give me\nstrength.",
+		"Thank you.  I'll stay\nworthy of it."
+	],
+	"scold": [
+		"...I understand.",
+		"You're right.  Forgive\nme.",
+		"A fair lesson."
+	],
+	"scold_unfair": [
+		"...For what, exactly?",
+		"I've done nothing to\ndeserve that.",
+		"A lesson with no fault?\nHow strange.",
+		"Hmph.  I'll let that one\ngo.  Once."
+	],
+	"read": [
+		"Interesting.  Read on.\nI'll wait.",
+		"So much knowledge on\nthis screen.",
+		"Hmm.  Ancient writing?\nNo...  Just yours."
+	],
+	"held": [
+		"Is this necessary?",
+		"Put me down.  Gently.",
+		"Hm.  An odd view."
+	],
+	"dropped": [
+		"...That was unwise.",
+		"I'm unhurt.  Barely."
+	],
+	"wake": [
+		"Hm?  I was meditating.",
+		"You return.  Good."
+	],
+	"done": [
+		"It is done.  Well\nfought.",
+		"Finished.  A fine\npiece of work.",
+		"Another task conquered."
+	],
+	"ask": [
+		"A question awaits your\njudgment.",
+		"They are asking for\nyou.",
+		"Your answer is needed."
+	],
+	"your_turn": [
+		"The next move is yours.",
+		"It waits for you."
+	],
+	"failed": [
+		"A stumble.  Rise and\ntry again.",
+		"It failed.  Learn from\nit.",
+		"Not every battle is\nwon at once."
+	],
+	"bye": [
+		"Farewell.  For now.",
+		"Until next time."
+	],
+	"game": [
+		"To File City.  We have\nwork there too.",
+		"I'll see you in\nthere."
+	],
+	"hungry": [
+		"I am hungry.\nA meal, if you would.",
+		"Time to eat, I think.",
+		"Even I need food."
+	],
+	"ate": [
+		"Thank you.  Delicious.",
+		"A fine meal.",
+		"That will do nicely."
+	],
+	"full": [
+		"I have eaten enough.",
+		"Not now, thank you."
+	],
+	"toilet": [
+		"Pardon me.  I need\nthe toilet.",
+		"The toilet, please.\nSoon."
+	],
+	"toilet_done": [
+		"Much better.",
+		"Thank you."
+	],
+	"toilet_no": [
+		"That isn't necessary.",
+		"Not yet."
+	],
+	"accident": [
+		"...How embarrassing.",
+		"Forgive me."
+	],
+	"pile_left": [
+		"That mess is still\nthere.",
+		"Please clean that up."
+	],
+	"missed": [
+		"You forgot my meal.",
+		"I am famished."
+	],
+	"clean": [
+		"Thank you.",
+		"Tidy again."
+	],
+	"trained": [
+		"Progress.",
+		"A worthy session."
+	],
+	"trained_enough": [
+		"Enough of this one.\nAnother, perhaps.",
+		"This one is done\nfor today."
+	],
+	"trained_frozen": [
+		"Practice is never\nwasted.",
+		"Good form."
+	],
+	"train_start": [
+		"Observe.",
+		"Very well."
+	],
+	"cant_reach": [
+		"Out of reach.",
+		"Too far, I'm afraid."
+	],
+	"evolve_ready": [
+		"Even now, I can\nstill grow stronger!"
+	],
+	"evolve_close": [
+		"My %s could\nstill grow..."
+	]
+}

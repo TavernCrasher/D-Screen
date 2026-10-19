@@ -1,0 +1,158 @@
+{
+	"_note": "The pet's lines for every Digimon of a stage (PetBrain.stage_key: baby = Fresh and In-Training); his own few (own.json) join them. Rows split at line breaks; at most 3 rows under the name, each must fit DW1's text box (tests: test_pet_lines, tools/check_pet_lines.gd). DW1's font has letters, digits and . , : ; ? ! ' + - = only; two spaces between sentences.",
+	"greet": [
+		"Hi hi!  You're here!",
+		"Yay!  Play with me?",
+		"Ooh!  Big screen!"
+	],
+	"morning": [
+		"Morning!  Mm...  sleepy.",
+		"Sun's up!  Me too!"
+	],
+	"night": [
+		"Dark now...  Sleepy...",
+		"Yawn...  Bedtime?",
+		"You no sleep?\nMe stay up too!"
+	],
+	"talk": [
+		"What's that?  And that?",
+		"I'll grow big someday!",
+		"Hungry...  Just a bit.",
+		"Boing!  Boing!",
+		"This desk is big!",
+		"You smell nice.",
+		"Pat me?  Pat me!",
+		"I'm brave!  ...Kinda."
+	],
+	"praise": [
+		"Hehe!  Again!  Again!",
+		"Yay!  Me good!",
+		"Happy happy!"
+	],
+	"scold": [
+		"Sorry...",
+		"Waah...  Me be good.",
+		"Hmph.  ...Sorry."
+	],
+	"scold_unfair": [
+		"Huh?  Me no do it!",
+		"Why?  Me was good...",
+		"Waah!  Not fair!",
+		"Hmph!  Me sulk now."
+	],
+	"read": [
+		"Words!  So many!",
+		"I can't read yet...",
+		"Squiggles...  Hmm."
+	],
+	"held": [
+		"Wheee!",
+		"Up up up!",
+		"Too high!  Too high!"
+	],
+	"dropped": [
+		"Bonk!  ...I'm okay!",
+		"Ow...  Boing!"
+	],
+	"wake": [
+		"Mm?  Morning?",
+		"I was not sleeping!"
+	],
+	"done": [
+		"Done!  Yay!",
+		"You did it!  Hooray!",
+		"All done!  Play now?"
+	],
+	"ask": [
+		"Hey!  Hey!  Look!",
+		"Somebody asking you!",
+		"Look here!  Look!"
+	],
+	"your_turn": [
+		"Your turn!",
+		"What now?  What now?"
+	],
+	"failed": [
+		"Uh oh...",
+		"Broke?  Try again!",
+		"Oopsie..."
+	],
+	"bye": [
+		"Bye bye!",
+		"See you!  Come back!"
+	],
+	"game": [
+		"Going home!  Bye!",
+		"To File City!  Wheee!"
+	],
+	"hungry": [
+		"Hungry...  Hungry!",
+		"Tummy's rumbling!",
+		"Food?  Food please!"
+	],
+	"ate": [
+		"Yummy!",
+		"Nom nom!  More later!",
+		"Full tummy!"
+	],
+	"full": [
+		"No more...  Too full.",
+		"Not hungry!"
+	],
+	"toilet": [
+		"Uh-oh...  I need\nto go!",
+		"Potty!  Potty!"
+	],
+	"toilet_done": [
+		"All done!",
+		"Phew!"
+	],
+	"toilet_no": [
+		"I don't need to go!",
+		"Not now!"
+	],
+	"accident": [
+		"Oops...",
+		"Uh-oh...  Sorry..."
+	],
+	"pile_left": [
+		"Stinky...",
+		"It smells over there..."
+	],
+	"missed": [
+		"So hungry...",
+		"Nobody fed me..."
+	],
+	"clean": [
+		"Clean!  Thank you!",
+		"Yay, it's gone!"
+	],
+	"trained": [
+		"I did it!",
+		"I'm getting big!"
+	],
+	"trained_enough": [
+		"Sleepy...  No more\nof this one today.",
+		"Too tired for this.\nSomething else?"
+	],
+	"trained_frozen": [
+		"That was fun!",
+		"Again!  Again!"
+	],
+	"train_start": [
+		"Here I go!",
+		"Watch me!"
+	],
+	"cant_reach": [
+		"Too far...",
+		"I can't get there!"
+	],
+	"evolve_ready": [
+		"I feel all tingly...\nSomething's changing!",
+		"Soon I'll be big!\nI can feel it!"
+	],
+	"evolve_close": [
+		"I want more %s...\nthen I'll grow!",
+		"More %s!\nThen I can grow big!"
+	]
+}

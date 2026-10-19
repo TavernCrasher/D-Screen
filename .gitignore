@@ -1,0 +1,14 @@
+# Godot's import cache and the builds
+.godot/
+build/
+# never: game data, disc and card images (tools/check_tree.py refuses them too)
+*.bin
+*.cue
+*.iso
+*.chd
+*.m3u
+*.mcd
+*.mcr
+*.sav
+*.sstate
+__pycache__/

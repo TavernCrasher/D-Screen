@@ -1,0 +1,321 @@
+{
+	"_note": "The pet's comments on the map another save's partner enters (docs/desktop_pet.md, Places), by DW1's area name (services.json area_names, the map's loading_name); shared by every partner.",
+	"Native Forest": [
+		"Native Forest!  Smells\nlike home.",
+		"Watch for Kunemon\nup in the trees!",
+		"The forest is so\nquiet today..."
+	],
+	"Coela Point": [
+		"Coela Point!  The sea\nbreeze is nice.",
+		"Coelamon hang\naround here.",
+		"Waves on the rocks...\nso relaxing."
+	],
+	"Dragon Eye Lake": [
+		"Dragon Eye Lake...\nSo deep and blue.",
+		"They say Seadramon\nlives in that lake!",
+		"Good fishing at the\nlake, I bet!"
+	],
+	"Drill Tunnel Entrance": [
+		"The Drill Tunnel!\nMind your step.",
+		"It's dark in there.\nStay close!",
+		"Drimogemon dug all\nof this, you know."
+	],
+	"Digimon Bridge": [
+		"Digimon Bridge!\nDon't look down!",
+		"Long bridge...  Is it\nsafe?",
+		"The wind is strong\non this bridge!"
+	],
+	"Tropical Jungle": [
+		"Tropical Jungle!\nSo hot and sticky.",
+		"Palmon like it here,\nI think.",
+		"Careful, the jungle\nis full of vines!"
+	],
+	"Mangrove Region": [
+		"Mangroves!  Don't get\nyour feet wet!",
+		"Smells like the sea\nhere.",
+		"Muddy roots\neverywhere..."
+	],
+	"Path Thru Mt. Panorama": [
+		"Up Mt. Panorama!\nKeep going!",
+		"Steep path...  Take\nit slow.",
+		"The view gets better\nas we climb!"
+	],
+	"Entrance to File City": [
+		"Almost back to File\nCity!",
+		"File City's right\nthere!",
+		"The gate to File\nCity!  Welcome back!"
+	],
+	"Mt. Panorama Plains": [
+		"The plains are so\nwide here!",
+		"Great place for a\nrun!",
+		"Look at all that\ngrass!"
+	],
+	"Foot of Mt. Panorama": [
+		"The foot of the\nmountain.  Big climb!",
+		"Mt. Panorama is\nreally tall...",
+		"Rest up before\nthe climb!"
+	],
+	"Mt. Panorama Spore Area": [
+		"Spores!  Achoo!",
+		"Don't breathe the\nspores too much!",
+		"Mushrooms\neverywhere up here."
+	],
+	"Drill Tunnel": [
+		"Deep in the Drill\nTunnel...  Spooky.",
+		"I can hear\ndigging...",
+		"Which way was out\nagain?"
+	],
+	"Drill Tunnel 2nd floor": [
+		"Second floor down.\nKeep going!",
+		"Deeper and\ndeeper...",
+		"Mind the drop!"
+	],
+	"Drill Tunnel 3rd floor": [
+		"The bottom of the\ntunnel!  Wow!",
+		"So deep...  Is that\nwater I hear?",
+		"Lots of tough\nDigimon down here."
+	],
+	"Residential Area": [
+		"Somebody lives\naround here.",
+		"Cozy little homes!",
+		"Say hi to the\nneighbours!"
+	],
+	"Underground Pond": [
+		"An underground pond!\nSo cool and damp.",
+		"Drip...  drip...\nEchoes everywhere.",
+		"Something might be\nswimming in there."
+	],
+	"Lava Cave": [
+		"Lava Cave!  Hot hot\nhot!",
+		"Don't touch the lava,\nokay?",
+		"Meramon would love\nit here."
+	],
+	"Overdell": [
+		"Overdell...  I don't\nlike it here.",
+		"Brr.  Ghosts live\nhere, they say.",
+		"Stay close to me in\nOverdell!"
+	],
+	"Overdell Cemetery": [
+		"The cemetery...\nSo creepy...",
+		"Did that grave just\nmove!?",
+		"Let's not stay here\ntoo long..."
+	],
+	"Great Canyon Entrance": [
+		"The Great Canyon!\nSo big!",
+		"Rocks everywhere.\nWatch your feet.",
+		"Echo!  ...echo!"
+	],
+	"Great Canyon Top Area": [
+		"So high up!  Don't\nfall!",
+		"You can see\neverything from here!",
+		"The wind up here is\nwild!"
+	],
+	"Great Canyon Bridge": [
+		"Careful on that\nbridge!",
+		"Bridges again...\nDon't look down!",
+		"One step at a time!"
+	],
+	"Fortress Entrance": [
+		"That fortress looks\nscary...",
+		"Ogremon's place...\nBe ready!",
+		"Tough guys ahead.\nStay sharp!"
+	],
+	"Great Canyon Bot. Area": [
+		"The bottom of the\ncanyon.  Long way up!",
+		"Shady and cool down\nhere.",
+		"Rocks fell from way\nup there!"
+	],
+	"Ogre Fortress": [
+		"Ogre Fortress!\nGive 'em a fight!",
+		"Ogremon's gang...\nWe can take them!",
+		"This place is full\nof bullies!"
+	],
+	"Monochrome Shop": [
+		"Monochromon's shop!\nBuy something nice!",
+		"Shopping!  Is there\nmeat?",
+		"Help him sell stuff!\nIt's fun!"
+	],
+	"Grey Lord's Mansion": [
+		"A creepy mansion...\nWho lives here?",
+		"Grey Lord...  Sounds\nimportant.",
+		"Big house!  Don't\nget lost!"
+	],
+	"Mansion Basement": [
+		"The basement...\nIt's dark down here.",
+		"What's behind all\nthese doors?",
+		"Shh!  Did you hear\nsomething?"
+	],
+	"Underground Lab": [
+		"A secret lab!  What\ndo they make here?",
+		"Machines\neverywhere...  Whoa.",
+		"Don't touch any\nbuttons!"
+	],
+	"Gear Savanna": [
+		"Gear Savanna!  So\nmuch open space!",
+		"Gears in the grass?\nWeird place.",
+		"Run, run, run!"
+	],
+	"Ancient Dino Region": [
+		"Ancient Dino Region!\nBig footprints...",
+		"Something huge\nlived here.",
+		"Rawr!  Just\npractising."
+	],
+	"Ancient Glacial Region": [
+		"So cold!  Ancient\nice everywhere.",
+		"Brrr...  My feet are\nfreezing!",
+		"What's frozen in\nthat ice?"
+	],
+	"Ancient Speedy Region": [
+		"The Speedy Region!\nGotta go fast!",
+		"Everything here\nmoves so quick!",
+		"Race you!"
+	],
+	"Freezeland": [
+		"Freezeland!  Bundle\nup out there!",
+		"Snow!  Let's make a\nsnow Digimon!",
+		"Brr!  Is it always\nthis cold?",
+		"Penguinmon must love\nit here."
+	],
+	"Ice Sanctuary": [
+		"The Ice Sanctuary...\nSo pretty.",
+		"It's so quiet and\nshiny here.",
+		"Careful, the floor\nis slippery!"
+	],
+	"Green Gym": [
+		"A gym!  Train hard\nout there!",
+		"Training time!  Go\nfor it!",
+		"I want to train\ntoo!"
+	],
+	"Leomon Ancestor's Cave": [
+		"Leomon's ancestors...\nThis place is old.",
+		"Respect the cave.\nIt feels special.",
+		"Old writing on the\nwalls..."
+	],
+	"Misty Trees": [
+		"Misty Trees...  I\ncan't see a thing!",
+		"Don't get lost in\nthe fog!",
+		"Spooky trees...\nStay close."
+	],
+	"Great Canyon": [
+		"The Great Canyon!\nIt goes on forever.",
+		"Big rocks, big sky!",
+		"Watch out for\nfalling rocks!"
+	],
+	"Geko Swamp": [
+		"Geko Swamp...\nSmells funny.",
+		"Ribbit!  Hehe.",
+		"Squishy mud\neverywhere!"
+	],
+	"Volume Villa": [
+		"Volume Villa!  It's\nnice and quiet.",
+		"What a pretty\nvillage!",
+		"I like this place!"
+	],
+	"File City": [
+		"File City!  Home\nsweet home.",
+		"Say hi to Jijimon\nfor me!",
+		"File City's getting\nbigger every day!",
+		"It's good to be\nback in town."
+	],
+	"Item Keeper": [
+		"Keep your stuff\nsafe!",
+		"Don't forget what\nyou stored!",
+		"So many things in\nstorage!"
+	],
+	"Centar Clinic": [
+		"The clinic!  Is\nsomeone sick?",
+		"Feel better soon!",
+		"Centarumon knows\nhis medicine."
+	],
+	"Restaurant": [
+		"The restaurant!  I'm\nhungry now...",
+		"Mmm!  Smells so\ngood!",
+		"Save some for me!",
+		"Meat!  Is there\nmeat!?"
+	],
+	"Item Shop": [
+		"Shopping!  Get\nsomething useful!",
+		"Buy some meat while\nyou're there!",
+		"Don't spend it all\nat once!"
+	],
+	"Jijimon's house": [
+		"Jijimon's house!\nSay hello!",
+		"Jijimon always has\nsomething to say.",
+		"Cozy in here.  Time\nfor a nap?"
+	],
+	"Secret Item Shop": [
+		"A secret shop!?\nWhat's for sale?",
+		"Shh!  It's a\nsecret!",
+		"Rare stuff in\nhere, I bet."
+	],
+	"Toy Town": [
+		"Toy Town!  So many\ntoys!",
+		"Can I play too?",
+		"Everything here is\nso tiny and cute!"
+	],
+	"Secret Beach Cave": [
+		"A hidden cave by\nthe beach!",
+		"Waves echo in\nhere...",
+		"Treasure, maybe?"
+	],
+	"Factorial Town": [
+		"Factorial Town!\nNoisy machines!",
+		"Clank, clank!  So\nloud!",
+		"Watch out for the\nconveyor belts!"
+	],
+	"Birdra Transport": [
+		"Flying with\nBirdramon!  Wheee!",
+		"Hold on tight!",
+		"I wish I could fly\ntoo!"
+	],
+	"Arena Lobby": [
+		"The arena!  Good\nluck in there!",
+		"Tournament time?\nGo win it!",
+		"Fight hard!  I'm\ncheering for you!"
+	],
+	"Treasure Hunt": [
+		"Treasure hunting!\nFind something good!",
+		"Dig, dig, dig!",
+		"Is it here?  Or\nthere?"
+	],
+	"Trash Mountain": [
+		"Trash Mountain...\nPee-yew!",
+		"So much junk!",
+		"Sukamon live here,\nright?"
+	],
+	"Sewer": [
+		"The sewer...  It\nstinks!",
+		"Hold your nose!",
+		"Numemon everywhere,\nI bet."
+	],
+	"Beetle Land": [
+		"Beetle Land!  Bugs\neverywhere!",
+		"Kabuterimon's home\nturf.",
+		"Bzzz!  Hehe."
+	],
+	"Mt. Infinity": [
+		"Mt. Infinity...  The\ntoughest place.",
+		"Be careful up there.\nReally careful.",
+		"This is it...  Go\nall out!"
+	],
+	"Digimon Curling": [
+		"Curling!  Slide it\nnice and easy!",
+		"Aim for the middle!",
+		"I'm cheering for\nyou!"
+	],
+	"Toy Mansion": [
+		"The Toy Mansion!\nWhat a big toy box!",
+		"Toys everywhere...\nIt's a bit spooky.",
+		"Who owns all these\ntoys?"
+	],
+	"Costume House": [
+		"Costumes!  Try one\non!",
+		"Dress-up time!",
+		"What a fancy place!"
+	],
+	"Robot House": [
+		"A robot house!\nBeep boop!",
+		"So many gadgets!",
+		"Do robots dream?"
+	]
+}

@@ -1,0 +1,158 @@
+{
+	"_note": "The pet's lines for every Digimon of a stage (PetBrain.stage_key: baby = Fresh and In-Training); his own few (own.json) join them. Rows split at line breaks; at most 3 rows under the name, each must fit DW1's text box (tests: test_pet_lines, tools/check_pet_lines.gd). DW1's font has letters, digits and . , : ; ? ! ' + - = only; two spaces between sentences.",
+	"greet": [
+		"Hi!  Let's do our best\ntoday!",
+		"You're here!  I've been\nwaiting all morning!",
+		"Ready when you are!\nWhat are we doing?"
+	],
+	"morning": [
+		"Good morning!  Did you\nsleep well?",
+		"Morning!  Let's train\nbefore breakfast!"
+	],
+	"night": [
+		"It's getting late...\nAren't you tired?",
+		"Still working?  I'll\nstay up with you.",
+		"Back in File City,\neveryone's asleep now."
+	],
+	"talk": [
+		"Jijimon says we'll save\nFile City together.",
+		"I want to get stronger\nand evolve!",
+		"Training makes me hungry.\nIs it meat time yet?",
+		"Your screen is so bright.\nIs it always like this?",
+		"When I'm bigger, I'll\nprotect you.  Promise!",
+		"I wonder what I'll\nevolve into...",
+		"There's so much to see\nout here!",
+		"Let's take a walk later.\nAfter your work."
+	],
+	"praise": [
+		"Really?  Thanks!  I'll\nkeep it up!",
+		"Hehe!  That makes me\nso happy!",
+		"Yes!  I knew I could\ndo it!"
+	],
+	"scold": [
+		"Sorry...  I'll be good.",
+		"Okay, okay.  I get it.",
+		"I won't do it again.\nProbably."
+	],
+	"scold_unfair": [
+		"Huh?  What did I do?",
+		"Hey!  That's not fair!",
+		"But I was being good...",
+		"Hmph.  Whatever."
+	],
+	"read": [
+		"What are all these\nwords about?",
+		"I'll read along.\n...Nope.  Lost.",
+		"Is this a map?  It\ndoesn't look like one."
+	],
+	"held": [
+		"Whoa!  Hey, put me down!",
+		"Ah!  I can fly!?",
+		"Careful!  I'm ticklish!"
+	],
+	"dropped": [
+		"Oof!  I'm okay!",
+		"That was...  fun?  Ow."
+	],
+	"wake": [
+		"Huh?  Oh!  You're back!",
+		"I wasn't sleeping!\n...Okay, a little."
+	],
+	"done": [
+		"It's done!  You did it!",
+		"Finished!  That was a\nlong one!",
+		"All done!  Let's\ncelebrate with meat!"
+	],
+	"ask": [
+		"Hey!  Something needs\nyour answer!",
+		"Look!  They're asking\nyou something!",
+		"Quick!  A question\nfor you!"
+	],
+	"your_turn": [
+		"Your turn!  What's\nnext?",
+		"It's waiting for you."
+	],
+	"failed": [
+		"Uh oh...  It broke?",
+		"That didn't work.\nLet's try again!",
+		"Don't give up!\nI'm right here."
+	],
+	"bye": [
+		"See you later!",
+		"Bye!  Come back soon!"
+	],
+	"game": [
+		"Off to File City!\nSee you there!",
+		"Time for a real\nadventure!"
+	],
+	"hungry": [
+		"I'm hungry!  Is it\nmeat time yet?",
+		"My stomach's growling.",
+		"Can I have something\nto eat?"
+	],
+	"ate": [
+		"Ahh, that hit the spot!",
+		"Delicious!  Thanks!",
+		"Meat is the best!"
+	],
+	"full": [
+		"I'm still full.\nMaybe later.",
+		"No thanks, I'm full."
+	],
+	"toilet": [
+		"I need to go!\nWhere's the toilet?",
+		"Toilet!  Quick!"
+	],
+	"toilet_done": [
+		"Phew, much better!",
+		"Made it in time!"
+	],
+	"toilet_no": [
+		"I don't need to go\nright now.",
+		"Not yet!"
+	],
+	"accident": [
+		"Oh no...  I couldn't\nhold it...",
+		"Sorry...  I didn't\nmake it."
+	],
+	"pile_left": [
+		"Hey, could you clean\nthat up?",
+		"Something stinks\naround here..."
+	],
+	"missed": [
+		"I'm starving...",
+		"You forgot to feed me..."
+	],
+	"clean": [
+		"Thanks for cleaning up!",
+		"Much better!"
+	],
+	"trained": [
+		"Yeah!  I'm stronger!",
+		"Good workout!"
+	],
+	"trained_enough": [
+		"Enough of this one.\nSomething else?",
+		"That one's done for\ntoday.  Another?"
+	],
+	"trained_frozen": [
+		"Good practice!",
+		"That felt good!"
+	],
+	"train_start": [
+		"Here I go!",
+		"Let's do this!"
+	],
+	"cant_reach": [
+		"I can't reach it!",
+		"That's too far!"
+	],
+	"evolve_ready": [
+		"My body feels hot...\nI'm about to change!",
+		"Something big is\ncoming.  I can feel it!"
+	],
+	"evolve_close": [
+		"A bit more %s\nand I'll digivolve!",
+		"I need more %s.\nI'm so close!"
+	]
+}
