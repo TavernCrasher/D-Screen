@@ -38,7 +38,10 @@ This repository is D-Screen's source code, so you can read what it does and buil
   installer, it adds five async hooks to `~/.claude/settings.json` after a backup; each one
   appends a line to a file in `%APPDATA%\D-Screen` that the app reads. Uninstalling removes them.
 
-The installer isn't signed, so Windows SmartScreen may warn you before it runs.
+The installer isn't signed, so Windows SmartScreen may warn you before it runs. Each
+[release](https://github.com/TavernCrasher/D-Screen/releases) lists its installer's SHA-256 and a
+VirusTotal report; check your download with `Get-FileHash D-Screen-Setup-<version>.exe` in
+PowerShell.
 
 ## Building
 

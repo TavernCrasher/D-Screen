@@ -4,7 +4,8 @@ D-Screen is an unofficial fan project, not affiliated with or endorsed by Bandai
 Animation. Digimon is their trademark. No game data is included: it reads your own copy of
 Digimon World 1.
 
-D-Screen's code: Copyright (c) 2026 Tav, under the MIT License:
+D-Screen's code: Copyright (c) 2026 Tav, under the MIT License
+(source: https://github.com/TavernCrasher/D-Screen):
 
   Permission is hereby granted, free of charge, to any person obtaining a copy of this software
   and associated documentation files (the "Software"), to deal in the Software without

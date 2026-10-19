@@ -27,6 +27,14 @@ WHAT YOU NEED
   is a Ninjamon just for the desktop, and their care isn't kept between launches.
 
 
+INSTALLING
+The installer isn't code-signed, so Windows SmartScreen may say "Windows protected your PC":
+click More info, then Run anyway. Each release on https://github.com/TavernCrasher/D-Screen
+lists its installer's SHA-256 and a VirusTotal report. To check your download, in PowerShell:
+  Get-FileHash D-Screen-Setup-0.1.0.exe
+and compare the Hash with the release's.
+
+
 FIRST RUN
 The setup window shows this notice, finds or asks for the disc image and checks it, then lists
 the DW1 saves on DuckStation's memory cards so you can pick your partner. You can change both
@@ -66,6 +74,11 @@ WHERE THINGS ARE
 - Their files (settings, their desktop progress, the sound cache, card backups): %APPDATA%\D-Screen
 D-Screen never goes online. It reads DuckStation's memory read-only to know which save is being
 played, and writes your memory card only when you answer Yes in the Apply window.
+
+
+SOURCE CODE
+D-Screen's source is public, so you can read what it does and build it yourself:
+https://github.com/TavernCrasher/D-Screen (its README lists everything it does on your PC).
 
 
 CREDITS
