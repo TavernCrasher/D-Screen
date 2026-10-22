@@ -43,6 +43,22 @@ The installer isn't signed, so Windows SmartScreen may warn you before it runs. 
 VirusTotal report; check your download with `Get-FileHash D-Screen-Setup-<version>.exe` in
 PowerShell.
 
+### If Windows Defender or your browser flags it
+
+A few antivirus engines, Microsoft Defender among them, flag the installer with a
+machine-learning guess (for 1.0.0, Defender's is `Trojan:Win32/Wacatac.B!ml`, a name it gives
+many unsigned installers). Nothing in it matches known malware: it's flagged for what's listed
+above, building a helper on first run and reading another program's memory. If your browser
+blocks the download or Defender quarantines it, you can check the file's SHA-256 against the
+release, read the source here, and allow it in Windows Security > Virus & threat protection >
+Protection history. Only do that for a file whose hash matches the release.
+
+### Windows Firewall
+
+D-Screen never goes online, so Windows Firewall has no reason to ask about it. If a firewall
+prompt appears while you set it up, it's from another program (for example a file-sharing app
+you used to receive the installer); its name is in the prompt.
+
 ## Building
 
 You need Windows, [Godot 4.7.2](https://godotengine.org/) with its export templates, Python 3 and,
