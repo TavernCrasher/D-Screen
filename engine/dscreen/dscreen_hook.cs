@@ -83,7 +83,7 @@ static class DScreenHook
     }
 
     // The hook's command line. Claude Code runs it in Git Bash when the PC has it, else in PowerShell,
-    // which prints a lone quoted string instead of running it (Doug's beta report, 2026-10-20). So:
+    // which prints a lone quoted string instead of running it (a beta report, 2026-10-20). So:
     // a path without spaces goes bare (both shells run it); with spaces, the folder's 8.3 short name
     // when the volume has them; failing that, quoted for Git Bash or "& quoted" for PowerShell, by
     // what the PC has now (installing Git Bash later needs a reinstall or --install).

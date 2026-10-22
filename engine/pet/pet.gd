@@ -165,6 +165,7 @@ var _dscreen := false                # the shareable app (the dscreen tag, or --
 var _duck := -1                      # DuckStation: -1 not known yet, 0 closed, else its pid
 var _ram := {}                       # DW1 in DuckStation (CardLink.parse_ram), {} none
 var _away := false                   # gone into DW1: his save is being played
+var _hidden := false                 # gone into DW1 (_gone): the window hidden, nothing ticks but the watch
 var _menu_kind := ""                 # "" the menus, "apply" the Apply window, "saves" the save picker
 var _switch_to := {}                 # a picked save waiting for the Apply window about the current one
 var _switch_at := 0.0
@@ -326,6 +327,8 @@ func _ready() -> void:
 		care.d["live"]["hunger_at"] = care.d["live"]["clock"]
 	if _args.has("due"):                         # debug: due for the toilet now
 		PetCues.due_now(care.d)
+	if _args.has("away"):                        # debug: as if his save were being played (a game_load
+		_away = true                             # event in his feed then sends him into DW1)
 	if _args.has("accident"):                    # debug: an accident on the next frame
 		care.d["live"]["poops"] = [float(care.d["live"]["clock"])]
 		care.d["live"]["toilet_since"] = float(care.d["live"]["clock"])
@@ -597,6 +600,12 @@ func _save_config() -> void:
 # ---------------------------------------------------------------- the frame
 func _process(delta: float) -> void:
 	_now += delta
+	if _hidden:                                              # gone into DW1 (_gone): wait for DuckStation
+		_take_feed(delta)                                    # to close (_duck_feed starts him again)
+		_pid_left -= delta
+		if _pid_left <= 0.0:
+			_write_pid()
+		return
 	bubble.anchor = Vector2(_body_x(), _floor_y() - (FEET + (head_px if head_px > 0.0 else top_px)) * k)
 	bubble.ppu = _px_per_m * FieldMap.UNIT
 	bubble.face_px = TEXT_SCALE * k
@@ -1120,7 +1129,7 @@ func _menu_head() -> Vector2:
 
 ## Beside his head (right of it, or left when that would leave the window, which is always on the
 ## screen sideways), every frame, so it stays with him; up and down inside the part of the window
-## that is on the screen: off its top high on a window, over the taskbar low (9d 4, Doug's report).
+## that is on the screen: off its top high on a window, over the taskbar low (9d 4, the beta tester's report).
 ## _place_window holds the window down for it (_view_y).
 func _place_menu() -> void:
 	var head := _menu_head()
@@ -2169,6 +2178,9 @@ func _shot(path: String, after: float) -> void:
 	await get_tree().create_timer(after).timeout
 
 	print("window ", win.position, " ", win.size, " ", pet_name, " ", model_px, " x ", body_w, " px, moves ", brain.train)
+	if _args.has("away"):
+		print("away: hidden ", _hidden, " state ", S.keys()[state], " window shown ", win.visible,
+			" model ticking ", model.process_mode != Node.PROCESS_MODE_DISABLED, " fps cap ", Engine.max_fps)
 	if _args.has("probe"):                                   # debug: would a click at window x,y reach him?
 		var xy := String(_args["probe"]).split(",")
 		var m := Vector2(float(xy[0]), float(xy[1]))
@@ -2179,8 +2191,11 @@ func _shot(path: String, after: float) -> void:
 	else:
 		print("ring closed")
 	await RenderingServer.frame_post_draw
-	win.get_texture().get_image().save_png(path)
-	print("saved ", path)
+	if not win.visible:                                      # gone into DW1: nothing drawn to save
+		print("not saved (his window is hidden) ", path)
+	else:
+		win.get_texture().get_image().save_png(path)
+		print("saved ", path)
 	var uw = place.placed if place.placed != null and is_instance_valid(place.placed) else place.use.get("win")
 	if uw != null and is_instance_valid(uw):                 # and a waiting or in-use prop's window
 		uw.get_texture().get_image().save_png(path.get_basename() + "_prop.png")
@@ -2208,10 +2223,23 @@ func _gone() -> void:
 	if not _away:
 		_quit()
 		return
+	if _hidden:
+		return
 	care.flush(_now, true)
 	place.close_ring()
 	box.close_now()
+	if menu.is_open():
+		menu.close_window()
 	win.hide()
+	# really away: hidden, he walked on unseen (the ground check and his clips ran on, footsteps and
+	# all, and his care clock with them) and this ran every frame (the user, 2026-10-22). Now only
+	# the DuckStation watch and the pid tick until DuckStation closes and he starts again.
+	_hidden = true
+	sfx.stop_all()
+	for n in [model, snd]:
+		if n != null:
+			n.process_mode = Node.PROCESS_MODE_DISABLED
+	Engine.max_fps = 5
 
 
 func _quit(restart := false) -> void:

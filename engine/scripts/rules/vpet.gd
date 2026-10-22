@@ -162,7 +162,7 @@ static func unapplied(d: Dictionary, link: Dictionary, meter: String) -> int:
 
 
 ## DW1's toilet window, (discipline + 20)% of an hour (main.c:9828-9855), 12-72 min, scaled so
-## discipline 100 is TOILET_MAX: 20-120 s on his clock (was 7.5-45 min: Doug's partner "had to poop
+## discipline 100 is TOILET_MAX: 20-120 s on his clock (was 7.5-45 min: the beta tester's partner "had to poop
 ## for ages"; the user: 2 minutes holding it at most, 2026-10-21, 9d 9).
 static func toilet_window(disc: int) -> float:
 	return (disc + 20) * TOILET_MAX / 120.0

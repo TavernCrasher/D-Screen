@@ -143,7 +143,7 @@ static func rects(list: String) -> Array:
 
 ## The helper's last "w " or "t " line since the previous frame as rects, or null when none came.
 ## A bare "w " is a list too, an empty one: minimizing the last window he stood on sends it, and
-## reading it as "no news" kept that window and left him standing in midair (9d 3, Doug's report).
+## reading it as "no news" kept that window and left him standing in midair (9d 3, the beta tester's report).
 static func feed_rects(line: String) -> Variant:
 	return null if line == "" else rects(line.substr(2))
 
@@ -160,7 +160,7 @@ static func sleep_rect(x: float, floor_y: float, body_w: float, model_px: float,
 
 ## How far below its place his window (top at `top_y`, `h` px tall) sits while his menu is open, so
 ## its top is on the screen (`usable_top`): Settings is nearly as tall as the window, and high on a
-## window it opened past the screen's top (9d 4, Doug's report). Never so far that the `keep` px his
+## window it opened past the screen's top (9d 4, the beta tester's report). Never so far that the `keep` px his
 ## body needs above the window's bottom leave it; he is drawn that much higher in it (cam.v_offset).
 static func menu_drop(top_y: float, h: float, usable_top: float, keep: float) -> float:
 	return clampf(usable_top - top_y, 0.0, maxf(0.0, h - keep))

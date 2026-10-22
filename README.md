@@ -46,8 +46,8 @@ PowerShell.
 ### If Windows Defender or your browser flags it
 
 A few antivirus engines, Microsoft Defender among them, flag the installer with a
-machine-learning guess (for 1.0.0, Defender's is `Trojan:Win32/Wacatac.B!ml`, a name it gives
-many unsigned installers). Nothing in it matches known malware: it's flagged for what's listed
+machine-learning guess (Defender's is a `Trojan:Win32/Wacatac` name ending in `!ml`, which it gives
+many unsigned installers; each release lists its scan). Nothing in it matches known malware: it's flagged for what's listed
 above, building a helper on first run and reading another program's memory. If your browser
 blocks the download or Defender quarantines it, you can check the file's SHA-256 against the
 release, read the source here, and allow it in Windows Security > Virus & threat protection >

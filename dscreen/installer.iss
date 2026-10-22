@@ -3,7 +3,7 @@
 ; Per user, no admin rights: Claude Code's settings and DuckStation's cards are the user's own.
 
 #ifndef AppVersion
-  #define AppVersion "1.0.0"
+  #define AppVersion "1.0.1"
 #endif
 #ifndef AppDir
   #define AppDir "..\build\dscreen\app"

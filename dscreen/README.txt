@@ -34,7 +34,7 @@ INSTALLING
 The installer isn't code-signed, so Windows SmartScreen may say "Windows protected your PC":
 click More info, then Run anyway. Each release on https://github.com/TavernCrasher/D-Screen
 lists its installer's SHA-256 and a VirusTotal report. To check your download, in PowerShell:
-  Get-FileHash D-Screen-Setup-1.0.0.exe
+  Get-FileHash D-Screen-Setup-1.0.1.exe
 and compare the Hash with the release's.
 
 
