@@ -53,12 +53,6 @@ blocks the download or Defender quarantines it, you can check the file's SHA-256
 release, read the source here, and allow it in Windows Security > Virus & threat protection >
 Protection history. Only do that for a file whose hash matches the release.
 
-### Windows Firewall
-
-D-Screen never goes online, so Windows Firewall has no reason to ask about it. If a firewall
-prompt appears while you set it up, it's from another program (for example a file-sharing app
-you used to receive the installer); its name is in the prompt.
-
 ## Building
 
 You need Windows, [Godot 4.7.2](https://godotengine.org/) with its export templates, Python 3 and,
