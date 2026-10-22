@@ -10,6 +10,8 @@
 //                                 entries are replaced, everything else is kept as it was.
 //   dscreen-hook.exe --uninstall  removes D-Screen's entries (and only those), after a backup.
 //   --settings=<path>             another settings.json (tests); --events=<path> another feed.
+//   --command-for=<exe>           prints the command --install would write for that exe (tests);
+//                                 with --shell=bash|powershell, skips the 8.3 step and the detection.
 //
 // Exit codes (install / uninstall): 0 done or nothing to do, 1 settings.json isn't valid JSON
 // (left untouched), 2 can't read or write it, 3 no Claude Code folder.
@@ -43,12 +45,20 @@ static class DScreenHook
 
     static int Main(string[] args)
     {
-        string settings = null, events = null, mode = "hook";
+        string settings = null, events = null, mode = "hook", commandFor = null;
+        bool? bash = null;
         foreach (string a in args)
         {
             if (a == "--install" || a == "--uninstall") mode = a.Substring(2);
             else if (a.StartsWith("--settings=")) settings = a.Substring(11);
             else if (a.StartsWith("--events=")) events = a.Substring(9);
+            else if (a.StartsWith("--command-for=")) commandFor = a.Substring(14);
+            else if (a == "--shell=bash" || a == "--shell=powershell") bash = a == "--shell=bash";
+        }
+        if (commandFor != null)              // tests: the command --install would write for that exe
+        {
+            Console.Write(Command(commandFor, bash, bash == null));
+            return 0;
         }
         if (mode == "hook")
         {
@@ -68,8 +78,59 @@ static class DScreenHook
             }
             settings = Path.Combine(dir, "settings.json");
         }
-        string exe = System.Reflection.Assembly.GetExecutingAssembly().Location.Replace('\\', '/');
-        return Edit(settings, mode == "install" ? "\"" + exe + "\"" : null);
+        string exe = System.Reflection.Assembly.GetExecutingAssembly().Location;
+        return Edit(settings, mode == "install" ? Command(exe, null, true) : null);
+    }
+
+    // The hook's command line. Claude Code runs it in Git Bash when the PC has it, else in PowerShell,
+    // which prints a lone quoted string instead of running it (Doug's beta report, 2026-10-20). So:
+    // a path without spaces goes bare (both shells run it); with spaces, the folder's 8.3 short name
+    // when the volume has them; failing that, quoted for Git Bash or "& quoted" for PowerShell, by
+    // what the PC has now (installing Git Bash later needs a reinstall or --install).
+    // gitBash null = detect; shortNames false = skip the 8.3 step (tests).
+    static string Command(string exe, bool? gitBash, bool shortNames)
+    {
+        exe = exe.Replace('\\', '/');
+        if (exe.IndexOf(' ') < 0) return exe;
+        int cut = exe.LastIndexOf('/');
+        if (shortNames && cut > 0)
+        {
+            string dir = ShortPath(exe.Substring(0, cut).Replace('/', '\\'));
+            if (dir != null && dir.IndexOf(' ') < 0) return dir.Replace('\\', '/') + exe.Substring(cut);
+        }
+        return (gitBash ?? HasGitBash()) ? "\"" + exe + "\"" : "& \"" + exe + "\"";
+    }
+
+    [DllImport("kernel32.dll", CharSet = CharSet.Unicode)]
+    static extern uint GetShortPathName(string longPath, StringBuilder shortPath, uint size);
+
+    static string ShortPath(string path)
+    {
+        var b = new StringBuilder(1024);
+        try { return GetShortPathName(path, b, (uint)b.Capacity) > 0 ? b.ToString() : null; }
+        catch (Exception) { return null; }
+    }
+
+    // Where Claude Code looks for Git Bash: CLAUDE_CODE_GIT_BASH_PATH, then git.exe on PATH, then
+    // Git for Windows' usual folders.
+    static bool HasGitBash()
+    {
+        string env = Environment.GetEnvironmentVariable("CLAUDE_CODE_GIT_BASH_PATH");
+        if (!string.IsNullOrEmpty(env) && File.Exists(env)) return true;
+        foreach (string d in (Environment.GetEnvironmentVariable("PATH") ?? "").Split(';'))
+        {
+            try
+            {
+                if (d.Trim().Length == 0 || !File.Exists(Path.Combine(d.Trim(), "git.exe"))) continue;
+                if (File.Exists(Path.Combine(d.Trim(), "..", "bin", "bash.exe")) ||
+                    File.Exists(Path.Combine(d.Trim(), "..", "..", "bin", "bash.exe"))) return true;
+            }
+            catch (Exception) { }
+        }
+        foreach (string root in new[] { Environment.GetEnvironmentVariable("ProgramFiles"),
+                                        Environment.GetEnvironmentVariable("LOCALAPPDATA") + "\\Programs" })
+            if (!string.IsNullOrEmpty(root) && File.Exists(Path.Combine(root, "Git", "bin", "bash.exe"))) return true;
+        return false;
     }
 
     // ------------------------------------------------------------ the hook

@@ -18,6 +18,10 @@ const SESSION := 12.0                # s on a station (DW1's session is 1200 fra
 const LINGER := 10.0                 # s an unused prop stays on the desktop
 const GRAVITY := 2600.0
 const TRIES := 3                     # leaps toward a prop before he gives up on it
+const FLOAT_AT_STATION := 0.75       # of a floating baby's float he drops while he trains (9d 6)
+const TOILET_SEAT := Vector3(0, 0.46, -0.04)   # props units: his feet on the bowl's rim (at 0.3 the bowl hid his legs, 9d 15)
+const SHRINK_WAIT := 0.6              # s before a used prop shrinks away ...
+const SHRINK_TIME := 0.3              # ... and how long it takes (he steps off the toilet with it, 9d 14)
 ## Station clips (DW1 ids; gym_session.gd): push 0x1B, stand under the water 0, the strike per
 ## Digimon (GymMoves.STRIKE), brace 0x25 against the glove, run 4, nod 0x16 at the desk (restarted
 ## every 35 frames), then 0x12 when the session ends.
@@ -443,8 +447,12 @@ func _mirror(all: Array) -> void:
 		m.scale = w.node.scale
 		m.rotation = w.node.rotation
 		var z := -0.4 * prop_scale()
-		var up: float = (pet._feet().y - w.feet.y) / pet._px_per_m
-		m.position = Vector3((w.feet.x - pet._feet().x) / pet._px_per_m, (up + z * sin(th)) / cos(th), z) \
+		# both from where the windows really are (whole pixels): from his float position the copy drifted
+		# 0-1 px against the prop's own window while he walked, a shimmer at the edges (9d 16)
+		var me: Vector2 = Vector2(pet.win.position) + Vector2(pet._body_x(), pet._floor_y() - pet.FEET * pet.k)
+		var it: Vector2 = Vector2(w.position) + Vector2(w.size.x / 2.0, w.size.y - PetPropWindow.FEET * w._k)
+		var up: float = (me.y - it.y) / pet._px_per_m
+		m.position = Vector3((it.x - me.x) / pet._px_per_m, (up + z * sin(th)) / cos(th), z) \
 			+ Vector3(w.node.position.x, w.node.position.y, 0)   # a session's jitter
 		for part in MOVING:                          # the glove's punch, the log's shake
 			var a := w.node.find_child(part, true, false) as Node3D
@@ -566,7 +574,7 @@ func _begin(name: String, side: float) -> void:
 		"toilet":
 			if pet.care.use_toilet():               # settled as he sits: the window can't run out mid-squat (PET-11)
 				_face(0.0)
-				pet.holder.position = Vector3(0, 0.3, -0.12) * prop_scale()   # on the seat, behind the bowl's front
+				pet.holder.position = Vector3(0, TOILET_SEAT.y, TOILET_SEAT.z) * prop_scale()   # on the rim, his legs over the bowl's front
 				pet._play(A_SQUAT)
 				use["end"] = 4.0
 			else:
@@ -582,10 +590,18 @@ func _begin(name: String, side: float) -> void:
 		"waterfall":
 			_face(0.0)
 			use["end"] = SESSION
+		"glove":
+			_face(90.0 * face)
+			use["end"] = SESSION
+			use["next"] = -1.0                       # the last punch cycle played: none, so cycle 0's punch
+			                                         # plays too (it was silent, 0 = "already played", 9d 17)
 		_:
 			_face(90.0 * face)
 			use["end"] = SESSION
 	if not use.is_empty() and Vpet.STATIONS.has(name):
+		# a floating baby trains down at the station, not hovering over it (props are his mesh's
+		# height; Poyomon floated over the waterfall, the user, 9d 6); _end puts him back up
+		pet.holder.position.y -= DigimonModel.dw1_bottom(pet.type) * FLOAT_AT_STATION
 		match name:
 			"boulder":
 				pet.gym(GYM_BOULDER)
@@ -732,6 +748,10 @@ func _finish(name: String) -> void:
 			pet._play(pet.brain.A_HAPPY)
 			pet._say(pet.brain.pick("toilet_done"))
 			_shrink(node)
+			# down off the seat as it shrinks away; he hovered at seat height until the clip ended (9d 14)
+			var down := create_tween()
+			down.tween_interval(SHRINK_WAIT)
+			down.tween_property(pet.holder, "position", Vector3.ZERO, SHRINK_TIME)
 		_:
 			pet.gym(GYM_END)
 			_stop_loop()
@@ -749,8 +769,8 @@ func _finish(name: String) -> void:
 
 func _shrink(node: Node3D) -> void:
 	var tw := create_tween()
-	tw.tween_interval(0.6)
-	tw.tween_property(node, "scale", node.scale * 0.05, 0.3)
+	tw.tween_interval(SHRINK_WAIT)
+	tw.tween_property(node, "scale", node.scale * 0.05, SHRINK_TIME)
 
 
 func _end() -> void:
@@ -803,7 +823,9 @@ func _glove(node: Node3D, t: float) -> void:
 		if not g.has_meta("x0"):
 			g.set_meta("x0", g.position.x)
 		g.position.x = float(g.get_meta("x0")) + float(offs[f]) * 0.0025
-	if f == 1 and float(use["next"]) != floorf(t * 20.0 / offs.size()):
+	# no punch once the session ended: the glove shrinks away, and it went on "boing"-ing until _end
+	# (the user, 9d 17; the log, chalkboard and boulder already stopped at the end)
+	if f == 1 and t < float(use["end"]) and float(use["next"]) != floorf(t * 20.0 / offs.size()):
 		use["next"] = floorf(t * 20.0 / offs.size())
 		pet._play(37)
 		pet.gym(GYM_GLOVE)                           # each time it reaches him (trn_def.c:129, 236-238; PET-29)
@@ -824,6 +846,9 @@ func add_pile(p: Dictionary) -> void:
 
 
 func _pile_window(p: Dictionary) -> void:
+	var have = piles.get(int(p["id"]))
+	if have != null and is_instance_valid(have):         # an accident before the saved piles were drawn
+		return                                           # had two windows: one stayed after a clean (the user)
 	var w := PetPropWindow.new()
 	w.setup(PetProps.pile(), pet._px_per_m, 1.0, pet.k, pet.PITCH)
 	add_child(w)

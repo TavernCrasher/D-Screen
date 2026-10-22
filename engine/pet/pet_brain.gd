@@ -116,13 +116,16 @@ static func _json(path: String) -> Variant:
 	return JSON.parse_string(text) if text != "" else null
 
 
-## His height on screen: DW1's sizes softened (the square root of the ratio to Ninjamon), so the big
-## ones still look big without covering the screen (the user, 2026-10-18): Botamon 108 px,
-## Tyrannomon 213, SkullGreymon 268.
+## His height on screen: smaller than Ninjamon, DW1's own proportion (the user, 2026-10-21, 9d 6:
+## the babies looked far too big; Poyomon 84 px, was 113); bigger, softened (the square root of
+## the ratio), so the big ones still look big without covering the screen (the user, 2026-10-18):
+## Botamon 78 px, Tyrannomon 213, SkullGreymon 268.
 static func size_px(id: int) -> float:
 	var ref := DigimonModel.dw1_height(DEFAULT_TYPE)
 	var h := DigimonModel.dw1_height(id)
-	return MODEL_PX * sqrt(h / ref) if h > 0.0 and ref > 0.0 else MODEL_PX
+	if h <= 0.0 or ref <= 0.0:
+		return MODEL_PX
+	return MODEL_PX * (h / ref if h < ref else sqrt(h / ref))
 
 
 ## The DW1 animation ids of the moves he shadowboxes with: the save's equipped three and his
@@ -321,3 +324,20 @@ func on_event(ev: Dictionary, now: float) -> Dictionary:
 	if quiet and r.has("line") and not r.get("urgent", false):
 		r.erase("line")
 	return r
+
+
+## The command line for his next run. Godot's own options aren't in OS.get_cmdline_args, so a run
+## from the editor (tools/run_pet.bat) lost --rendering-driver opengl3 on a restart (a save switch)
+## and came back under Forward+, whose transparent window tints a box around him (the user,
+## 2026-10-21: Ninjamon fine, then Agumon and Tokomon boxed); they're given again, with --path. The
+## exported app sets its renderer in its own settings. A first run's options aren't repeated.
+static func relaunch_args(args: PackedStringArray, user: PackedStringArray, exported: bool, driver: String, path: String) -> PackedStringArray:
+	var out := PackedStringArray()
+	if not exported:
+		out.append_array(["--rendering-driver", driver, "--path", path])
+	out.append_array(args)
+	out.append("--")
+	for a in user:
+		if not (a == "--first-run" or a.begins_with("--disc=")):
+			out.append(a)
+	return out

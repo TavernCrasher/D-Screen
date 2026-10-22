@@ -11,7 +11,7 @@ const HUNGER_EVERY := 15 * 60.0      # active s from a meal to the next hunger
 const MISSED_AFTER := 45 * 60.0      # hungry this long unfed: a missed meal, then the next 45 min on
 const POOP_DELAY := 10 * 60.0        # each meal's poop comes 10-20 active min after it
 const POOP_SPREAD := 10 * 60
-const TOILET_MAX := 45 * 60.0        # DW1's 12-72 min toilet window scaled into 45 min at most
+const TOILET_MAX := 120.0            # DW1's 12-72 min toilet window scaled into 2 min at most (the user, 9d 9)
 const PILE_AFTER := 45 * 60.0        # a pile out this long costs, once for all the piles out then
 ## Praise and scold (rule 11, 3a #10). DW1's one "deserved" flag is the scold's (0x80134c59): set by
 ## an accident (main.c:9848-9851) or a refused item (9654-9660; the pet's only item is the Meat, and
@@ -46,6 +46,24 @@ const PILE_LEFT := "pile_left"
 ## A new file for the link's partner (its id is random: a recreated file starts from zero in the
 ## game's merge). Without a link (Ninjamon, no save): the same in memory, never written.
 static func fresh(link: Dictionary, now := 0.0) -> Dictionary:
+	var out := _fresh(link, now)
+	if link.has("card"):
+		out["card"] = card_key(link["card"])
+	return out
+
+
+## A card file's path as his file keeps it (D-Screen): the same however it's spelled.
+static func card_key(card) -> String:
+	return str(card).replace("\\", "/").to_lower()
+
+
+## His file belongs to another card than the link's: the same save in the same slot on a copied
+## card has the same uid, and without this its totals were offered again there (9d 5).
+static func other_card(d: Dictionary, link: Dictionary) -> bool:
+	return link.has("card") and d.has("card") and card_key(d["card"]) != card_key(link["card"])
+
+
+static func _fresh(link: Dictionary, now := 0.0) -> Dictionary:
 	return {"format": VpetSave.FORMAT, "slot": int(link.get("slot", -1)),
 		"file_id": Crypto.new().generate_random_bytes(8).hex_encode(), "seq": 0,
 		"partner_uid": str(link.get("partner_uid", "")), "partner_id": int(link.get("partner_id", 0)),
@@ -65,11 +83,12 @@ static func day_of(d: Dictionary, unix: float) -> String:
 
 
 ## His file as read (VpetSave.read_pet) for the link's partner: kept when it's his; a different
-## partner (rebirth, a new game, another save) moves the old totals to "previous", never applied.
+## partner (rebirth, a new game, another save, the same save on another card) moves the old totals
+## to "previous", never applied. A file from before the card stamp takes the link's card.
 static func adopt(d: Dictionary, link: Dictionary) -> Dictionary:
 	if d.is_empty():
 		return fresh(link)
-	if str(d.get("partner_uid", "")) != str(link.get("partner_uid", "")):
+	if str(d.get("partner_uid", "")) != str(link.get("partner_uid", "")) or other_card(d, link):
 		var old := d.duplicate(true)
 		old.erase("previous")
 		var n := fresh(link)                        # a new file id: a zero baseline in the game
@@ -86,6 +105,8 @@ static func adopt(d: Dictionary, link: Dictionary) -> Dictionary:
 			ev[k] = int(d["totals"].get(k, 0))
 		d["evolved"] = ev
 	d["partner_id"] = id
+	if link.has("card"):
+		d["card"] = card_key(link["card"])
 	var f := fresh(link)                            # a file from before the care side: its clock starts now
 	for k in ["days", "live"]:
 		if not d.get(k) is Dictionary:
@@ -141,7 +162,8 @@ static func unapplied(d: Dictionary, link: Dictionary, meter: String) -> int:
 
 
 ## DW1's toilet window, (discipline + 20)% of an hour (main.c:9828-9855), 12-72 min, scaled so
-## discipline 100 is TOILET_MAX: 7.5-45 min on his clock.
+## discipline 100 is TOILET_MAX: 20-120 s on his clock (was 7.5-45 min: Doug's partner "had to poop
+## for ages"; the user: 2 minutes holding it at most, 2026-10-21, 9d 9).
 static func toilet_window(disc: int) -> float:
 	return (disc + 20) * TOILET_MAX / 120.0
 

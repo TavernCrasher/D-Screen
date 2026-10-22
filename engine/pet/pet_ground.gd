@@ -12,18 +12,27 @@ static func stands_on(windows: Array, ground: Rect2, x: float, usable: Rect2, ro
 
 
 ## The surface he lands on falling from feet y0 to y1 at x: {"y": top, "rect": the window} (rect
-## empty for the taskbar), or {} while nothing is crossed. The highest surface crossed wins.
-static func landing(windows: Array, x: float, y0: float, y1: float, usable: Rect2, room: float, margin: float) -> Dictionary:
+## empty for the taskbar), or {} while nothing is crossed. The highest surface crossed wins. snap:
+## a window top whose nearest standable spot is that close to x catches him too, with "x" the spot
+## (dropped where two windows meet, just past the front one's end and over the covered part of the
+## one behind, he fell through both, the user, 9d 11).
+static func landing(windows: Array, x: float, y0: float, y1: float, usable: Rect2, room: float, margin: float,
+		snap := 0.0) -> Dictionary:
 	if y1 < y0:
 		return {}
 	var best := {}
 	for i in windows.size():
 		var r: Rect2 = windows[i]
 		var top := r.position.y
-		if top < y0 or top > y1 or not _edge_ok(windows, i, x, usable, room, margin):
+		if top < y0 or top > y1:
+			continue
+		var at := x if _edge_ok(windows, i, x, usable, room, margin) else _nearest_spot(windows, i, x, usable, room, margin, snap)
+		if is_nan(at):
 			continue
 		if best.is_empty() or top < float(best["y"]):
 			best = {"y": top, "rect": r}
+			if at != x:
+				best["x"] = at
 	var floor_y := usable.end.y
 	if best.is_empty() and y1 >= floor_y:
 		best = {"y": floor_y, "rect": Rect2()}
@@ -85,6 +94,30 @@ static func _index(windows: Array, r: Rect2) -> int:
 	return -1
 
 
+## The standable x on window i nearest x and at most `snap` from it, or NAN: the end of its walkable
+## span, or just past a higher window covering its top.
+static func _nearest_spot(windows: Array, i: int, x: float, usable: Rect2, room: float, margin: float, snap: float) -> float:
+	if snap <= 0.0:
+		return NAN
+	var sp := span(windows[i], margin)
+	if sp.x > sp.y:
+		return NAN
+	var tries := [clampf(x, sp.x, sp.y)]
+	var r: Rect2 = windows[i]
+	for j in i:
+		var c: Rect2 = windows[j]
+		if c.position.y <= r.position.y - 3.0 and c.end.y > r.position.y - 3.0:
+			tries.append(clampf(c.position.x - 1.0, sp.x, sp.y))
+			tries.append(clampf(c.end.x + 1.0, sp.x, sp.y))
+	var best := NAN
+	for t in tries:
+		var tx := float(t)
+		if absf(tx - x) <= snap and _edge_ok(windows, i, tx, usable, room, margin) \
+				and (is_nan(best) or absf(tx - x) < absf(best - x)):
+			best = tx
+	return best
+
+
 static func _edge_ok(windows: Array, i: int, x: float, usable: Rect2, room: float, margin: float) -> bool:
 	var r: Rect2 = windows[i]
 	if x < r.position.x + margin or x > r.end.x - margin:
@@ -96,6 +129,73 @@ static func _edge_ok(windows: Array, i: int, x: float, usable: Rect2, room: floa
 		if (windows[j] as Rect2).has_point(above):
 			return false
 	return true
+
+
+## The helper's rect list ("x0 y0 x1 y1;..." after its "w " / "t " tag) as Rect2s.
+static func rects(list: String) -> Array:
+	var out := []
+	for part in list.strip_edges().split(";", false):
+		var n := part.split(" ")
+		if n.size() == 4:
+			out.append(Rect2(float(n[0]), float(n[1]), float(n[2]) - float(n[0]), float(n[3]) - float(n[1])))
+	return out
+
+
+## The helper's last "w " or "t " line since the previous frame as rects, or null when none came.
+## A bare "w " is a list too, an empty one: minimizing the last window he stood on sends it, and
+## reading it as "no news" kept that window and left him standing in midair (9d 3, Doug's report).
+static func feed_rects(line: String) -> Variant:
+	return null if line == "" else rects(line.substr(2))
+
+
+## His click box asleep (window px; feet at `x`, the ground line at `floor_y`): wide for one lying
+## down, and as tall as he stands, since a floating baby sleeps up in the air (Poyomon drawn 197-319
+## px down a 453 px window, the old low box 375-453: he couldn't be clicked or woken, 9d 2). Only
+## his own pixels in it take the click (pet.gd _on_body), so the height costs nothing beside him.
+static func sleep_rect(x: float, floor_y: float, body_w: float, model_px: float, top_px: float, feet: float, k: float) -> Rect2:
+	var w := maxf(body_w, model_px * 1.4) * k
+	var h := (feet + maxf(model_px * 0.6, top_px * 1.12)) * k
+	return Rect2(x - w / 2.0, floor_y - h, w, h)
+
+
+## How far below its place his window (top at `top_y`, `h` px tall) sits while his menu is open, so
+## its top is on the screen (`usable_top`): Settings is nearly as tall as the window, and high on a
+## window it opened past the screen's top (9d 4, Doug's report). Never so far that the `keep` px his
+## body needs above the window's bottom leave it; he is drawn that much higher in it (cam.v_offset).
+static func menu_drop(top_y: float, h: float, usable_top: float, keep: float) -> float:
+	return clampf(usable_top - top_y, 0.0, maxf(0.0, h - keep))
+
+
+## The menu's top (layer units) between `lo` and `hi` (the part of his window on the screen), 2 apart
+## from each; one too tall for it keeps its top rows on the screen.
+static func menu_y(y: float, size_y: float, lo: float, hi: float) -> float:
+	return maxf(lo + 2.0, minf(y, hi - size_y - 2.0))
+
+
+## A throw's speed (px/s): the mouse's travel over its last `window` s before the release, from
+## `samples` ([time, Vector2] in order). A per-frame smoothing was dragged down by the slowing last
+## frames of a flick (the user, 9d 10: he slowed the moment the mouse let go).
+static func flick(samples: Array, now: float, window: float) -> Vector2:
+	if samples.size() < 2:
+		return Vector2.ZERO
+	var last: Array = samples[-1]
+	var first: Array = samples[0]
+	for s in samples:
+		if float(s[0]) >= now - window:
+			first = s
+			break
+	if first == last:
+		first = samples[-2]
+	var dt := float(last[0]) - float(first[0])
+	return (Vector2(last[1]) - Vector2(first[1])) / dt if dt > 0.0 else Vector2.ZERO
+
+
+## The throw's speed caps (px/s): sideways enough to cross `screen_w` in about a second of flight
+## (1800 px/s fell short of an ultrawide, 9d 10), never below `base`; up stays `base`, so a hard flick
+## can't send him past the screen's top.
+static func throw_cap(v: Vector2, screen_w: float, base: float) -> Vector2:
+	var side := maxf(base, screen_w * 1.2)
+	return Vector2(clampf(v.x, -side, side), clampf(v.y, -base, base))
 
 
 ## How far right of its place `x` his window of width `w` sits so it stays on `screen` (he is drawn

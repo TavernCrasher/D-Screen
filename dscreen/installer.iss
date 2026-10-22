@@ -3,7 +3,7 @@
 ; Per user, no admin rights: Claude Code's settings and DuckStation's cards are the user's own.
 
 #ifndef AppVersion
-  #define AppVersion "0.1.0"
+  #define AppVersion "1.0.0"
 #endif
 #ifndef AppDir
   #define AppDir "..\build\dscreen\app"
@@ -80,7 +80,7 @@ begin
   if (CurStep = ssPostInstall) and WizardIsTaskSelected('claude') then
     if not Exec(ExpandConstant('{app}\dscreen-hook.exe'), '--install', '', SW_HIDE, ewWaitUntilTerminated, Code) or (Code <> 0) then
       SuppressibleMsgBox('The Claude Code hooks weren''t added (code ' + IntToStr(Code) + '): settings.json was left as it was.' #13#10#13#10 +
-        'You can add them later with:' #13#10 + ExpandConstant('"{app}\dscreen-hook.exe" --install'), mbInformation, MB_OK, IDOK);
+        'You can add them later in PowerShell with:' #13#10 + ExpandConstant('& "{app}\dscreen-hook.exe" --install'), mbInformation, MB_OK, IDOK);
 end;
 
 procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);

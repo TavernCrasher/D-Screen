@@ -104,8 +104,7 @@ func _build() -> void:
 	var head := Label.new()
 	head.text = "D-Screen"
 	head.add_theme_font_size_override("font_size", 26)
-	v.add_child(head)
-	v.add_child(_text("a desktop partner for Digimon World 1", 14, Color8(200, 205, 235)))
+	v.add_child(head)                                   # the name alone (the user, 9d 18: no tagline naming the game)
 	v.add_child(_text(NOTICE, 13, Color8(255, 230, 120)))
 	v.add_child(_text("Your Digimon World (USA) disc image", 16))
 	var row := HBoxContainer.new()

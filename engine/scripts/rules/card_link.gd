@@ -183,7 +183,7 @@ static func link_for(slot: int, payload: PackedByteArray, data, pet: Dictionary,
 		"virus": int(dec["virus"]), "stage_hours": int(dec["stage_hours"]), "raised": dec["raised"],
 		"applied": applied["consumed"], "applied_file_id": applied["file_id"],
 		"ask": ask, "declined": declined, "tamer": str(dec["tamer"]), "tamer_raw": str(dec["tamer_raw"]),
-		"screen": int(dec["screen"]), "record": rec,
+		"screen": int(dec["screen"]), "record": rec, "play": dec["play"],
 		"species": str(data.digimon[id]["name"]) if id >= 0 and id < data.digimon.size() else "",
 		"written_at": Time.get_unix_time_from_system()}
 	out.merge(extra)
@@ -217,6 +217,8 @@ static func partner_of(link: Dictionary) -> Partner:
 static func pending(link: Dictionary, pet: Dictionary) -> Dictionary:
 	if link.is_empty():
 		return {"state": "none", "deltas": VpetSave.zeros(), "consumed": {}, "file_id": ""}
+	if Vpet.other_card(pet, link):                   # his file is another card's (9d 5)
+		return {"state": "orphan", "deltas": VpetSave.zeros(), "consumed": {}, "file_id": ""}
 	return VpetSave.pending({"consumed": link.get("applied", {}), "file_id": link.get("applied_file_id", "")},
 		pet, partner_of(link))
 
@@ -236,6 +238,15 @@ static func his_save(link: Dictionary, ram: Dictionary) -> bool:
 		return false
 	return names_tamer(str(ram["name"]), str(link.get("tamer_raw", ""))) \
 		and int(ram["raised"]) == int(link.get("raised_count", -1))
+
+
+## His save was played and saved since `before` was read (its play time moved): DuckStation closing
+## offers the Apply window only then (9d 5: it came after any session, the DW1.5 mod's, other saves'
+## or none). His save played is also caught by the RAM watch (he goes into DW1, then back with the
+## offer); this covers a session the watch missed.
+static func save_moved(before: Dictionary, now: Dictionary) -> bool:
+	return not now.is_empty() and str(before.get("partner_uid", "")) == str(now.get("partner_uid", "")) \
+		and before.get("play", []) != now.get("play", [])
 
 
 ## Whether entry 0's name in RAM (hex, 20 bytes) is this tamer's (NUL-terminated).
@@ -280,6 +291,12 @@ static func apply_rows(deltas: Dictionary, width: int) -> Array:
 		else:
 			rows.append(it)
 	return rows
+
+
+## The Apply window's question names the save it writes (9d 5: it didn't say which); the box's
+## speaker line already names him.
+static func apply_header(link: Dictionary) -> String:
+	return "Into DW1 save %d?" % (int(link.get("slot", 0)) + 1)
 
 
 ## apply_rows in pages of `per` rows, every page but the last marked " ..." (the pet's box shows a
@@ -350,7 +367,7 @@ static func apply(data, running := Callable(), shown := {}) -> Dictionary:
 		res["error"] = "the save can't be read (both copies damaged, or gone)"
 		return res
 	var pet := VpetSave.read_pet(slot)
-	var l := link_for(slot, s["payload"], data, pet)
+	var l := link_for(slot, s["payload"], data, pet, true, false, {"card": path})
 	var m := pending(l, pet)
 	if m["state"] != "pending":
 		res["error"] = "nothing to apply" if m["state"] == "none" else "the save holds another partner"

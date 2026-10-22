@@ -26,6 +26,8 @@ const HIT_SLACK := 4.0               # px around his pixels that still count as 
 const PITCH := 12.0                  # camera tilt, degrees (DW1's field camera looks down)
 const WALK_YAW := 70.0               # degrees: walking in three-quarter view
 const GRAVITY := 2600.0              # px/s^2
+const GONE_FALL_V := 450.0           # px/s down at once when the window under him goes (9d 12)
+const FLICK_WINDOW := 0.08           # s of the drag before the release a throw's speed is taken from
 const SLEEP_AFTER := 300.0           # s without input
 const TURN_SPEED := 240.0            # degrees per s: idle glances turn smoothly
 const FACE_SPEED := 720.0            # degrees per s: other turns (to walk, leap, face a prop, back to you)
@@ -44,6 +46,7 @@ const SETTINGS := ["Speech", "Quiet", "Stay Put", "Name", "Sounds", "Gym Sounds"
 ## D-Screen's Apply window (CardLink; the remake's three answers, main._vpet_offer).
 const APPLY := ["Yes", "No", "No, stop asking"]
 const APPLY_ROW := 24                # characters a row of gains takes in his text box (a row fits ~26)
+const SWITCH_AFTER := 2.5            # s from the Apply window closing to a save switch waiting on it
 const RAM_PATTERN := 0x8012CEE8      # the EXE stretch the helper finds DW1's RAM by (Digimon entry 1)
 const OFFER_AFTER := 6.0             # s after launch before the Apply window (after his greeting)
 const APPLY_PAGE := 3.0              # s a page of gains shows before the box turns to the next
@@ -151,9 +154,9 @@ var _args := {}
 var _feed := {}
 var _feed_thread: Thread
 var _feed_mutex := Mutex.new()
-var _feed_w := ""                    # the helper's latest window list ("" = none new)
+var _feed_w := ""                    # the helper's latest window line, "w " included ("" = none new)
 var _feed_i := -1                    # its latest idle time (-1 = none new)
-var _feed_t := ""                    # its latest taskbar list ("" = none new)
+var _feed_t := ""                    # its latest taskbar line, "t " included ("" = none new)
 var _feed_c: Array[Vector2] = []     # its mouse presses anywhere on the desktop since the last frame
 var _feed_d := ""                    # its latest DuckStation line ("d ..."; "" = none new)
 var _feed_m := ""                    # its latest DW1 RAM line ("m ...")
@@ -163,14 +166,16 @@ var _duck := -1                      # DuckStation: -1 not known yet, 0 closed, 
 var _ram := {}                       # DW1 in DuckStation (CardLink.parse_ram), {} none
 var _away := false                   # gone into DW1: his save is being played
 var _menu_kind := ""                 # "" the menus, "apply" the Apply window, "saves" the save picker
+var _switch_to := {}                 # a picked save waiting for the Apply window about the current one
+var _switch_at := 0.0
+var _switch_ask := true              # "Ask to Apply" when the save was picked: the switch keeps it
 var _picker := []                    # the save picker's rows (CardLink.entries)
 var _apply_m := {}                   # the offer the Apply window shows (CardLink.pending)
 var _offer_at := 0.0                 # when to offer at launch (0: not)
 var _apply_pages := []               # the Apply window's box pages (two rows of gains each)
 var _apply_page := 0
 var _layer_y := 0.0
-var _held_last := Vector2.ZERO
-var _held_v := Vector2.ZERO
+var _held_trail := []                # [time, mouse] while he's held (PetGround.flick)
 var _jumping := false                # a leap on purpose: lands on his feet, no KO
 var _jump_to := Vector2.INF          # a leap's target (feet, desktop px): edges above it don't catch him
 var _jump_rect := Rect2()            # ... and the window it's on (Rect2() = the taskbar)
@@ -180,6 +185,7 @@ var _nod_at := -1.0                  # reading: the next nod (DW1's Brains desk 
 ## and falling when his window goes still move him, and he stays where that leaves him.
 var stay_put := false
 var _view_x := 0.0                   # px: his window sits this far right of pos to stay on the screen
+var _view_y := 0.0                   # px: with the menu open high up, this far below pos (PetGround.menu_drop)
 var _ride := Vector2.ZERO            # px: the last ride step his window hasn't caught up with yet (PetGround.ease_ride)
 var _ride_told := Rect2(-1, -1, 0, 0)   # the window he stands on, as last named to the helper
 var _hit_img: Image                  # his window's last frame, for the click area's alpha test
@@ -449,9 +455,8 @@ func _setup_finished(changed: bool, s: DScreenSetup, first: bool) -> void:
 
 ## This launch's arguments for the next one, less the one-time --first-run and --disc.
 func _restart_args() -> PackedStringArray:
-	var user := Array(OS.get_cmdline_user_args()).filter(
-		func(a): return not (a == "--first-run" or a.begins_with("--disc=")))
-	return OS.get_cmdline_args() + PackedStringArray(["--"]) + PackedStringArray(user)
+	return PetBrain.relaunch_args(OS.get_cmdline_args(), OS.get_cmdline_user_args(), OS.has_feature("template"),
+		RenderingServer.get_current_rendering_driver_name(), ProjectSettings.globalize_path("res://"))
 
 
 ## What he calls out when he trains a move: his own line for it, else the move's name.
@@ -592,13 +597,14 @@ func _save_config() -> void:
 # ---------------------------------------------------------------- the frame
 func _process(delta: float) -> void:
 	_now += delta
-	bubble.anchor = Vector2(_body_x(), win.size.y - (FEET + (head_px if head_px > 0.0 else top_px)) * k)
+	bubble.anchor = Vector2(_body_x(), _floor_y() - (FEET + (head_px if head_px > 0.0 else top_px)) * k)
 	bubble.ppu = _px_per_m * FieldMap.UNIT
 	bubble.face_px = TEXT_SCALE * k
 	bubble.box_bottom = layer.position.y + box.pixel_rect().end.y if box.visible and speech == "Mixed" else -1.0
 	_watch_user(delta)
 	_poll_events(delta)
 	_take_feed(delta)
+	_tick_switch()
 	_pid_left -= delta
 	if _pid_left <= 0.0:
 		_write_pid()
@@ -625,9 +631,9 @@ func _process(delta: float) -> void:
 			_tick_facing(delta)
 		S.HELD:
 			var m := Vector2(DisplayServer.mouse_get_position())
-			if delta > 0.0:
-				_held_v = _held_v.lerp((m - _held_last) / delta, 0.5)
-			_held_last = m
+			_held_trail.append([_now, m])                    # the last moments of the drag, for the throw
+			while _held_trail.size() > 2 and float(_held_trail[0][0]) < _now - FLICK_WINDOW * 3.0:
+				_held_trail.pop_front()
 			pos = m - _grab
 			_tick_facing(delta)
 		S.BYE:
@@ -892,8 +898,7 @@ func _on_input(e: InputEvent) -> void:
 func _pick_up() -> void:
 	pos += _ride
 	_ride = Vector2.ZERO
-	_held_last = Vector2(DisplayServer.mouse_get_position())
-	_held_v = Vector2.ZERO
+	_held_trail = [[_now, Vector2(DisplayServer.mouse_get_position())]]
 	if menu.is_open():
 		menu.close_window()
 	place.close_ring()
@@ -910,8 +915,8 @@ func _pick_up() -> void:
 
 ## Let go: he keeps the throw's speed (capped).
 func _drop() -> void:
-	var cap := 1800.0 * k
-	_fall(clampf(_held_v.x, -cap, cap), clampf(_held_v.y, -cap, cap))
+	var v := PetGround.throw_cap(PetGround.flick(_held_trail, _now, FLICK_WINDOW), _screen_rect().size.x, 1800.0 * k)
+	_fall(v.x, v.y)
 
 
 func _fall(vx: float, vy: float) -> void:
@@ -950,10 +955,12 @@ func _tick_fall(delta: float) -> void:
 			hit = {"y": _usable().end.y if _jump_rect.size == Vector2.ZERO else _jump_rect.position.y, "rect": _jump_rect}
 		else:
 			hit = PetGround.landing(windows, f.x, _jump_to.y, f.y, _usable(), _room(), 20.0 * k)
-	else:
-		hit = PetGround.landing(windows, f.x, y0, f.y, _usable(), _room(), 20.0 * k)
+	else:                                                    # a spot half his width over still catches him (9d 11)
+		hit = PetGround.landing(windows, f.x, y0, f.y, _usable(), _room(), 20.0 * k, body_w * 0.5 * k)
 	if hit.is_empty():
 		return
+	if hit.has("x"):
+		pos.x += float(hit["x"]) - f.x
 	_jump_to = Vector2.INF
 	_set_feet_y(float(hit["y"]))
 	ground = hit["rect"]
@@ -1053,6 +1060,12 @@ func _click(at: Vector2) -> void:
 		place.close_ring()
 		return
 	if box.visible and not box.done() and box.pixel_rect().has_point(at - layer.position):
+		if _menu_kind == "apply" and menu.is_open():      # the gains stay with the window: a click turns
+			if _apply_pages.size() > 1:                    # their page (it closed them, Yes / No left alone, 9d 7)
+				_apply_page = (_apply_page + 1) % _apply_pages.size()
+				box.set_page(pet_name, 7, _apply_pages[_apply_page])
+				box.queue_redraw()
+			return
 		box.close_now()
 		return
 	if menu.is_open():
@@ -1102,20 +1115,24 @@ func _open_menu(items: Array = MENU, kind := "") -> void:
 
 
 func _menu_head() -> Vector2:
-	return _dw(Vector2(_body_x(), win.size.y - (FEET + top_px * 0.8) * k))
+	return _dw(Vector2(_body_x(), _floor_y() - (FEET + top_px * 0.8) * k))
 
 
 ## Beside his head (right of it, or left when that would leave the window, which is always on the
-## screen), every frame, so it stays with him.
+## screen sideways), every frame, so it stays with him; up and down inside the part of the window
+## that is on the screen: off its top high on a window, over the taskbar low (9d 4, Doug's report).
+## _place_window holds the window down for it (_view_y).
 func _place_menu() -> void:
 	var head := _menu_head()
-	var lo := _dw(Vector2.ZERO)
-	var hi := _dw(Vector2(win.size))
+	var u := _usable()
+	var wy := float(win.position.y)
+	var lo := _dw(Vector2(0.0, maxf(0.0, u.position.y - wy)))
+	var hi := _dw(Vector2(float(win.size.x), minf(float(win.size.y), u.end.y - wy)))
 	var at := Vector2(head.x + 28, head.y)
 	if at.x + menu.width > hi.x - 2:
 		at.x = head.x - 28 - menu.width
 	at.x = clampf(at.x, lo.x + 2, hi.x - menu.width - 2)
-	at.y = clampf(at.y, lo.y + 2, hi.y - menu.target.size.y - 2)
+	at.y = PetGround.menu_y(at.y, menu.target.size.y, lo.y, hi.y)
 	menu.target.position = at
 
 
@@ -1142,6 +1159,8 @@ func _tick_menu(delta: float, clicks: Array[Vector2]) -> void:
 
 
 func _menu_pick(what: String, row := -1) -> void:
+	if row < 0 and what.begins_with("#"):                   # debug --pick=#N: the menu's row N (the save picker)
+		row = int(what.substr(1))
 	if _menu_kind == "apply":
 		_apply_answer(row)
 		return
@@ -1553,18 +1572,20 @@ func end_use() -> void:
 
 
 # ---------------------------------------------------------------- text
-func _say(text: String) -> void:
+## always: the app's own words (the Apply window's gains, card notices) show in the box in every
+## Speech mode; in Digi the Apply window had only Yes / No, no gains (9d 7).
+func _say(text: String, always := false) -> void:
 	if text == "":
 		return
 	var icon: Array = SPEECH_ICON.get(brain.category_of(text), [])
-	if speech != "Text" and not icon.is_empty():
+	if speech != "Text" and not icon.is_empty() and not always:
 		_icon(icon)
-	if speech == "Digi":                                     # only DW1's icons
+	if speech == "Digi" and not always:                      # only DW1's icons
 		return
 	if not box.visible:
 		ss(SS_OPEN)                                          # a box with a speaker zooms open with SS 0
 	box.set_page(pet_name, 7, text)                          # an NPC's name colour (FUN_80101688)
-	var head := _dw(Vector2(_body_x(), win.size.y - (FEET + top_px * 0.9) * k))
+	var head := _dw(Vector2(_body_x(), _floor_y() - (FEET + top_px * 0.9) * k))
 	box.open_text(Rect2(head, Vector2(8, 8)))
 	box_left = 3.5 + 0.05 * text.length()
 
@@ -1593,13 +1614,21 @@ func _place_window() -> void:
 	var w := float(win.size.x)
 	var at := pos + _ride
 	_view_x = PetGround.view_offset(at.x, w, _screen_rect(), w)    # dragged past the edge: he leaves it, the box doesn't
-	win.position = Vector2i(Vector2(at.x + _view_x, at.y).round())
+	_view_y = PetGround.menu_drop(at.y, float(win.size.y), _usable().position.y, (FEET + top_px * 1.15) * k) if menu.visible else 0.0
+	win.position = Vector2i(Vector2(at.x + _view_x, at.y + _view_y).round())
 	cam.h_offset = _view_x / _px_per_m
+	cam.v_offset = -_view_y / _px_per_m
 
 
 ## His feet's x in window pixels.
 func _body_x() -> float:
 	return float(win.size.x) / 2.0 - _view_x
+
+
+## The ground line under him in window pixels (his feet are FEET above it): the window's bottom,
+## higher while the menu holds his window down (_view_y).
+func _floor_y() -> float:
+	return float(win.size.y) - _view_y
 
 
 ## High on a window, the text layer slides down so the box stays on the desktop. Never sideways:
@@ -1671,7 +1700,9 @@ func _check_ground() -> void:
 	if not PetGround.stands_on(windows, ground, _feet().x, _usable(), _room(), 20.0 * k):
 		var vx := walk_dir * _walk_speed() if state == S.WALK else 0.0
 		var was_bye := state == S.BYE
-		_fall(vx, 0.0)
+		# his window went (closed, minimized): he drops at once; from rest he crept ~13 px in the
+		# first 0.1 s and looked late (9d 12). Walking off its end still starts from rest.
+		_fall(vx, 0.0 if windows.has(ground) else GONE_FALL_V * k)
 		if was_bye:
 			_gone()
 
@@ -1708,7 +1739,7 @@ func _duck_feed(dl: String, ml: String) -> void:
 			elif not now_link.is_empty() and (str(now_link["partner_uid"]) != str(link["partner_uid"])
 					or int(now_link["partner_id"]) != int(link["partner_id"])):
 				_quit(true)                              # his save changed partner without him (CARD-5)
-			else:
+			elif CardLink.save_moved(link, now_link):    # only when his save was played (9d 5)
 				_offer_apply()
 	if ml == "":
 		return
@@ -1723,7 +1754,7 @@ func _duck_feed(dl: String, ml: String) -> void:
 			if menu.is_open():
 				menu.close_window()
 			_bye("game")
-			_say("This game is from\nbefore my training!\nLoad from the title.")
+			_say("This game is from\nbefore my training!\nLoad from the title.", true)
 			return
 		_game_bye()
 	elif Dw1Model.exe and CardLink.save_loaded(_ram, Dw1Model.exe.bytes(Dw1Exe.DIGIMON_TABLE, 20).hex_encode()) \
@@ -1740,28 +1771,28 @@ func _offer_apply(force := false) -> void:
 		return
 	if _duck > 0 or CardLink.duckstation_running():
 		if force:
-			_say("Close DuckStation\nfirst, then I can\nbring it in!")
+			_say("Close DuckStation\nfirst, then I can\nbring it in!", true)
 		return
 	care.flush(_now, true)
 	var fresh := CardLink.link(GameData)
 	if fresh.is_empty() or str(fresh["partner_uid"]) != str(link["partner_uid"]):
 		if force:
-			_say("I can't find my\nsave on the card...")
+			_say("I can't find my\nsave on the card...", true)
 		return
 	link = fresh
 	care.link = link
 	var m := CardLink.pending(link, VpetSave.read_pet(int(link["slot"])))
 	if m["state"] != "pending":
 		if force:
-			_say("Nothing new to\nbring in yet!")
+			_say("Nothing new to\nbring in yet!", true)
 		return
 	if not force and not bool(link.get("ask", true)):
 		return
 	_apply_m = m
 	_apply_pages = CardLink.apply_pages(m["deltas"], APPLY_ROW).map(func(p: Array) -> String:
-		return "Take this into DW1?\n" + "\n".join(p))
+		return CardLink.apply_header(link) + "\n" + "\n".join(p))
 	_apply_page = 0
-	_say(_apply_pages[0])
+	_say(_apply_pages[0], true)
 	box_left = 600.0                                     # stays up while the window waits
 	_open_menu(APPLY, "apply")
 	if _apply_pages.size() > 1:
@@ -1803,10 +1834,12 @@ func _apply_answer(row: int) -> void:
 		if r["ok"]:
 			link = CardLink.link(GameData)
 			care.link = link
-			_act(PetBrain.A_JOY, "All set!  It's in\nyour DW1 save.")
+			_act(PetBrain.A_JOY)
+			_say("All set!  It's in\nyour DW1 save.", true)
 		else:
 			push_warning("pet: the card: " + str(r["error"]))
-			_act(PetBrain.A_UNHAPPY, "I couldn't write\nthe card...")
+			_act(PetBrain.A_UNHAPPY)
+			_say("I couldn't write\nthe card...", true)
 		return
 	CardLink.set_flags(row != 2, true)
 	link["ask"] = row != 2
@@ -1825,7 +1858,7 @@ func _open_saves() -> void:
 		var dec: Dictionary = e["partner"]
 		var id := int(dec["type"])
 		var sp := str(GameData.digimon[id]["name"]) if id >= 0 and id < GameData.digimon.size() else "?"
-		labels.append("%d %s (%s)" % [int(e["slot"]) + 1, dec["name"], sp])
+		labels.append("%d %s - %s" % [int(e["slot"]) + 1, dec["name"], sp])   # DW1's font has no ( ): they drew as △
 	if labels.is_empty():
 		_say("I can't find any\nDW1 saves on your\nmemory cards.")
 		return
@@ -1842,8 +1875,45 @@ func _pick_save(row: int) -> void:
 	if not c.is_empty() and str(c["card"]) == str(e["card"]) and int(c["slot"]) == int(e["slot"]):
 		_act(PetBrain.A_NOD)
 		return
-	if CardLink.write_choice(str(e["card"]), int(e["slot"])):
-		_quit(true)                                          # he comes back as that save's partner
+	# his gains waiting: the Apply window asks about them first, then the switch (the user's call,
+	# 9d 8); with DuckStation running the card can't be written, so he switches and they wait
+	_switch_ask = bool(link.get("ask", true))               # as it was before the window's answer
+	if not link.is_empty() and not _away and _duck <= 0 and not CardLink.duckstation_running() \
+			and CardLink.pending(link, VpetSave.read_pet(int(link["slot"])))["state"] == "pending":
+		_switch_to = e
+		_switch_at = _now + SWITCH_AFTER
+		_offer_apply(true)
+		if _apply_up():
+			print("pet: switching to save %d after the Apply window" % (int(e["slot"]) + 1))
+			return                                           # _tick_switch switches once it's answered
+		_switch_to = {}
+	_switch(e)
+
+
+## The picked save becomes his: he starts again as its partner. "Ask to Apply" stays as it was (it
+## was reset on every switch, 9d 8); the hold after a No is the old partner's and doesn't follow.
+func _switch(e: Dictionary) -> void:
+	print("pet: switching to save %d (%s)" % [int(e["slot"]) + 1, str(e["card"]).get_file()])
+	if CardLink.write_choice(str(e["card"]), int(e["slot"]), _switch_ask):
+		_quit(true)
+
+
+## The Apply window is up: opening (it zooms in over a few frames, not yet is_open) or open.
+func _apply_up() -> bool:
+	return _menu_kind == "apply" and menu.visible and menu.phase <= 1
+
+
+## A switch waiting on the Apply window: SWITCH_AFTER s after it closes (answered or not), so its
+## "All set!" is seen first.
+func _tick_switch() -> void:
+	if _switch_to.is_empty():
+		return
+	if _apply_up():
+		_switch_at = _now + SWITCH_AFTER
+	elif _now >= _switch_at:
+		var e := _switch_to
+		_switch_to = {}
+		_switch(e)
 
 
 # ---------------------------------------------------------------- the window feed
@@ -1869,9 +1939,9 @@ func _read_feed() -> void:
 			break
 		_feed_mutex.lock()
 		if line.begins_with("w "):
-			_feed_w = line.substr(2)
+			_feed_w = line                                   # whole: a bare "w " is an empty list, not none
 		elif line.begins_with("t "):
-			_feed_t = line.substr(2)
+			_feed_t = line
 		elif line.begins_with("i "):
 			_feed_i = int(line.substr(2))
 		elif line.begins_with("d "):
@@ -1908,12 +1978,14 @@ func _take_feed(delta: float) -> void:
 		_offer_at = 0.0
 		_offer_apply()
 	_tick_menu(delta, clicks)
-	if bars != "":
-		taskbars = _rects(bars)
-	if line == "":
+	var new_bars = PetGround.feed_rects(bars)
+	if new_bars != null:
+		taskbars = new_bars
+	var new_windows = PetGround.feed_rects(line)
+	if new_windows == null:
 		return
 	var top: Rect2 = windows[0] if not windows.is_empty() else Rect2()
-	windows = _rects(line)
+	windows = new_windows
 	# the front window changed (opened, focused, moved): he glances at it if it's on his screen
 	if not windows.is_empty() and not (windows[0] as Rect2).is_equal_approx(top) \
 			and _screen_rect().intersects(windows[0]):
@@ -1930,12 +2002,7 @@ func _take_feed(delta: float) -> void:
 
 ## "L T R B;L T R B;..." from the helper as rects.
 static func _rects(line: String) -> Array:
-	var out := []
-	for part in line.strip_edges().split(";", false):
-		var n := part.split(" ")
-		if n.size() == 4:
-			out.append(Rect2(float(n[0]), float(n[1]), float(n[2]) - float(n[0]), float(n[3]) - float(n[1])))
-	return out
+	return PetGround.rects(line)
 
 
 func _clamp_x() -> void:
@@ -2025,12 +2092,11 @@ func raise_window() -> void:
 ## Where he takes clicks, in window pixels: his body, the text box, the menu.
 func _hit_rects() -> Array[Rect2]:
 	var x := _body_x()
-	var h := float(win.size.y)
+	var h := _floor_y()
 	var bw := body_w * k
 	var out: Array[Rect2] = [Rect2(x - bw / 2.0, h - (FEET + top_px * 1.12) * k, bw, (FEET + top_px * 1.12) * k)]
-	if state == S.SLEEP:                                     # lying down: wide and low
-		var sw := maxf(body_w, model_px * 1.4) * k
-		out[0] = Rect2(x - sw / 2.0, h - (FEET + model_px * 0.6) * k, sw, (FEET + model_px * 0.6) * k)
+	if state == S.SLEEP:                                     # lying down, or a baby asleep in the air
+		out[0] = PetGround.sleep_rect(x, h, body_w, model_px, top_px, FEET, k)
 	if box.visible and not box.done():
 		out.append(_in_window(box.pixel_rect()).grow(4 * k))
 	if menu.visible:
@@ -2047,7 +2113,7 @@ func _measure_body() -> void:
 	await RenderingServer.frame_post_draw
 	await RenderingServer.frame_post_draw
 	bubble.visible = true
-	if state != S.IDLE or not holder.visible:                # (--hidden: once he appears)
+	if state != S.IDLE or not holder.visible or _view_y != 0.0:   # (--hidden: once he appears; not drawn up high for the menu)
 		_measured = false                                    # try again at the next idle
 		return
 	var img := win.get_texture().get_image()
@@ -2103,6 +2169,11 @@ func _shot(path: String, after: float) -> void:
 	await get_tree().create_timer(after).timeout
 
 	print("window ", win.position, " ", win.size, " ", pet_name, " ", model_px, " x ", body_w, " px, moves ", brain.train)
+	if _args.has("probe"):                                   # debug: would a click at window x,y reach him?
+		var xy := String(_args["probe"]).split(",")
+		var m := Vector2(float(xy[0]), float(xy[1]))
+		print("probe ", m, " state ", S.keys()[state], " body box ", _hit_rects()[0], " in box ", _hit_rects()[0].has_point(m),
+			" on his pixels ", _on_body(m), " click-through now ", _through)
 	if place.ring_open:
 		print("ring: ", range(place.ring_props.size()).map(func(i): return place._screen_of(i).round()))
 	else:

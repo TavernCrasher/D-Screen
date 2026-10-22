@@ -190,6 +190,10 @@ static class PetHelper {
 			IntPtr rw = RideWindow();
 			string ride = rw != IntPtr.Zero && DwmGetWindowAttribute(rw, 9, out rr, 16) == 0
 				? rr.L + " " + rr.T + " " + rr.R + " " + rr.B : "";
+			int ck;                                        // hidden, minimized or cloaked keeps its rect:
+			if (rw != IntPtr.Zero && (!IsWindowVisible(rw) || IsIconic(rw)       // a change now, not at the
+					|| (DwmGetWindowAttribute(rw, 14, out ck, 4) == 0 && ck != 0)))   // next 200 ms scan (9d 12)
+				ride = "gone";
 			bool moved = bars != lastBars || front != lastFront || ride != lastRide;
 			lastFront = front;
 			lastRide = ride;

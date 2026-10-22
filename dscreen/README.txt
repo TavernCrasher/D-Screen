@@ -25,13 +25,16 @@ WHAT YOU NEED
   by itself. Modded discs that move the game's tables aren't supported.
 - For the save bridge: DuckStation with DW1 saves on its memory cards. Without one your partner
   is a Ninjamon just for the desktop, and their care isn't kept between launches.
+- D-Screen itself needs only the disc image, no BIOS. Playing DW1 in DuckStation also needs a
+  PlayStation BIOS file (your own console's, e.g. scph1001.bin) in DuckStation's bios folder;
+  that's a different file from the game's .bin or .chd.
 
 
 INSTALLING
 The installer isn't code-signed, so Windows SmartScreen may say "Windows protected your PC":
 click More info, then Run anyway. Each release on https://github.com/TavernCrasher/D-Screen
 lists its installer's SHA-256 and a VirusTotal report. To check your download, in PowerShell:
-  Get-FileHash D-Screen-Setup-0.1.0.exe
+  Get-FileHash D-Screen-Setup-1.0.0.exe
 and compare the Hash with the release's.
 
 
@@ -63,10 +66,12 @@ If you use Claude Code, the installer can let your partner react to it: they che
 task finishes, look up when Claude Code asks for permission, and sulk when something fails. It adds
 five small async hooks (dscreen-hook.exe) to ~/.claude/settings.json, after a backup beside it
 (settings.json.bak-dscreen-<date>; every install and uninstall keeps one, delete old ones when
-you like). Restart Claude Code for it to pick them up. Uninstalling removes them again, and only
-them. By hand:
-  "%LOCALAPPDATA%\Programs\D-Screen\dscreen-hook.exe" --install
-  "%LOCALAPPDATA%\Programs\D-Screen\dscreen-hook.exe" --uninstall
+you like). Claude Code reads hooks when a session starts, so sessions already open don't get
+them: start a new one (in the terminal or the desktop app). To check, ask it to do something that
+needs your permission: your partner looks up. Uninstalling removes the hooks again, and only them.
+By hand, in PowerShell:
+  & "$env:LOCALAPPDATA\Programs\D-Screen\dscreen-hook.exe" --install
+  & "$env:LOCALAPPDATA\Programs\D-Screen\dscreen-hook.exe" --uninstall
 
 
 WHERE THINGS ARE
