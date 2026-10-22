@@ -53,6 +53,10 @@ blocks the download or Defender quarantines it, you can check the file's SHA-256
 release, read the source here, and allow it in Windows Security > Virus & threat protection >
 Protection history. Only do that for a file whose hash matches the release.
 
+## Known issues
+
+- If you answer **No** (or **No, stop asking**) in the Apply window, new desktop training doesn't count until those gains are in your save (the next Apply window's **Yes**, or Settings > **Apply to DW1**). Your partner doesn't say so yet: the only sign is that the stat ("Offense +1") is missing from what they say after a session. A clearer message is planned for the next update.
+
 ## Building
 
 You need Windows, [Godot 4.7.2](https://godotengine.org/) with its export templates, Python 3 and,
